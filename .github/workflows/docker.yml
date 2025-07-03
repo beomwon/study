@@ -1,0 +1,42 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # .env 파일 생성
+      - name: Write .env file
+        run: echo "${{ secrets.ENV }}" > docker/.env
+
+      # .env 파일을 export
+      - name: Export ENV vars
+        id: export_env
+        run: |
+          export $(cat docker/.env | xargs)
+          echo "DOCKER_USER_NAME=$DOCKER_USER_NAME" >> $GITHUB_ENV
+          echo "DOCKER_USER_PASSWORD=$DOCKER_USER_PASSWORD" >> $GITHUB_ENV
+
+      # 도커허브 로그인
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USER_NAME }}
+          password: ${{ env.DOCKER_USER_PASSWORD }}
+
+      # 도커 빌드 & 푸시
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile
+          push: true
+          tags: beomwon/myapp:latest
