@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://yourname.github.io/study/toss-and-turn-front",
+  "homepage": "https://beomwon.github.io/study/toss-and-turn-front",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
