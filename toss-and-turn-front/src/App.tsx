@@ -74,6 +74,16 @@ function App() {
       setIsMeasuring(true);
       setStatus("측정 중... 휴대폰을 움직여보세요!");
 
+      // 초기 센서 데이터 영역 표시
+      setSensorData({
+        eventCount: 0,
+        x: 0, y: 0, z: 0,
+        magnitude: 0, delta: 0,
+        hasAccelWithGravity: false,
+        hasAccel: false,
+        hasRotation: false
+      });
+
       let lastMagnitude = 0;
       let lastSent = 0;
       let eventCount = 0;
@@ -242,6 +252,8 @@ function App() {
       ...prev,
       `⏹️ ${new Date().toLocaleTimeString()} 측정 중지됨`,
     ]);
+    // 센서 데이터는 유지하지 않고 초기화
+    // setSensorData(null);
   };
 
   return (
@@ -265,33 +277,111 @@ function App() {
       </div>
 
       {sensorData && (
-        <div className="sensor-data">
-          <h3>📊 실시간 센서 데이터</h3>
-          <div className="sensor-grid">
-            <div className="sensor-item">
+        <div className="sensor-data" style={{
+          background: '#f8fafc',
+          border: '2px solid #10b981',
+          borderRadius: '8px',
+          padding: '1rem',
+          margin: '1rem 0',
+          textAlign: 'left'
+        }}>
+          <h3 style={{
+            marginTop: 0,
+            textAlign: 'center',
+            color: '#059669',
+            fontSize: '1.1rem'
+          }}>📊 실시간 센서 데이터</h3>
+          
+          <p style={{fontSize: '0.8rem', color: '#666', textAlign: 'center'}}>
+            sensorData 상태: {sensorData ? '✅ 존재함' : '❌ null'}
+          </p>
+          
+          <div className="sensor-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '0.5rem',
+            margin: '1rem 0'
+          }}>
+            <div className="sensor-item" style={{
+              background: 'white',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: '1px solid #d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
               <strong>이벤트 수:</strong> {sensorData.eventCount}
             </div>
-            <div className="sensor-item">
+            <div className="sensor-item" style={{
+              background: 'white',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: '1px solid #d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
               <strong>X축:</strong> {sensorData.x.toFixed(3)}
             </div>
-            <div className="sensor-item">
+            <div className="sensor-item" style={{
+              background: 'white',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: '1px solid #d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
               <strong>Y축:</strong> {sensorData.y.toFixed(3)}
             </div>
-            <div className="sensor-item">
+            <div className="sensor-item" style={{
+              background: 'white',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: '1px solid #d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
               <strong>Z축:</strong> {sensorData.z.toFixed(3)}
             </div>
-            <div className="sensor-item">
+            <div className="sensor-item" style={{
+              background: 'white',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: '1px solid #d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
               <strong>합성값:</strong> {sensorData.magnitude.toFixed(3)}
             </div>
-            <div className="sensor-item">
+            <div className="sensor-item" style={{
+              background: 'white',
+              padding: '0.5rem',
+              borderRadius: '4px',
+              border: '1px solid #d1d5db',
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
               <strong>움직임:</strong> {sensorData.delta.toFixed(3)}
             </div>
           </div>
-          <div className="sensor-status">
+          <div className="sensor-status" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            marginTop: '1rem'
+          }}>
             <div
               className={`status-indicator ${
                 sensorData.hasAccelWithGravity ? "active" : "inactive"
               }`}
+              style={{
+                padding: '0.5rem',
+                borderRadius: '4px',
+                fontSize: '0.9rem',
+                textAlign: 'center',
+                background: sensorData.hasAccelWithGravity ? '#dcfce7' : '#fef2f2',
+                border: sensorData.hasAccelWithGravity ? '1px solid #16a34a' : '1px solid #dc2626',
+                color: sensorData.hasAccelWithGravity ? '#166534' : '#991b1b'
+              }}
             >
               중력포함가속도: {sensorData.hasAccelWithGravity ? "✅" : "❌"}
             </div>
@@ -299,6 +389,15 @@ function App() {
               className={`status-indicator ${
                 sensorData.hasAccel ? "active" : "inactive"
               }`}
+              style={{
+                padding: '0.5rem',
+                borderRadius: '4px',
+                fontSize: '0.9rem',
+                textAlign: 'center',
+                background: sensorData.hasAccel ? '#dcfce7' : '#fef2f2',
+                border: sensorData.hasAccel ? '1px solid #16a34a' : '1px solid #dc2626',
+                color: sensorData.hasAccel ? '#166534' : '#991b1b'
+              }}
             >
               가속도: {sensorData.hasAccel ? "✅" : "❌"}
             </div>
@@ -306,6 +405,15 @@ function App() {
               className={`status-indicator ${
                 sensorData.hasRotation ? "active" : "inactive"
               }`}
+              style={{
+                padding: '0.5rem',
+                borderRadius: '4px',
+                fontSize: '0.9rem',
+                textAlign: 'center',
+                background: sensorData.hasRotation ? '#dcfce7' : '#fef2f2',
+                border: sensorData.hasRotation ? '1px solid #16a34a' : '1px solid #dc2626',
+                color: sensorData.hasRotation ? '#166534' : '#991b1b'
+              }}
             >
               회전: {sensorData.hasRotation ? "✅" : "❌"}
             </div>
