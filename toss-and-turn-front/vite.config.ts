@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/study/toss-and-turn-front/", // GitHub 경로 기준!
+  base: "/", // GitHub Pages root 경로
 });
