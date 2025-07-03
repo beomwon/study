@@ -2,6 +2,20 @@
   padding: 2rem;
   font-family: sans-serif;
   text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.status {
+  background: #f0f9ff;
+  border: 2px solid #0284c7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.controls {
+  margin: 2rem 0;
 }
 
 button {
@@ -12,14 +26,66 @@ button {
   font-size: 1.2rem;
   border-radius: 8px;
   cursor: pointer;
+  min-width: 150px;
+  transition: background-color 0.3s;
+}
+
+.start-btn {
+  background-color: #16a34a;
+}
+
+.start-btn:hover {
+  background-color: #15803d;
+}
+
+.stop-btn {
+  background-color: #dc2626;
+}
+
+.stop-btn:hover {
+  background-color: #b91c1c;
 }
 
 .log {
   margin-top: 2rem;
   background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
   padding: 1rem;
   text-align: left;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.log h3 {
+  margin-top: 0;
+  text-align: center;
+  color: #374151;
+}
+
+.log-entry {
+  background: white;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  border-left: 3px solid #3b82f6;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+  .app {
+    padding: 1rem;
+  }
+
+  button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .status p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
 }
