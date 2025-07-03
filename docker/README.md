@@ -40,8 +40,6 @@ ENV
 
 애플리케이션을 컨테이너로 빌드하기 위해 Dockerfile을 작성했습니다.
 
-<details>
-<summary>yml 파일</summary>
 ```yml
 FROM python:3.10.11
 WORKDIR /app
@@ -50,7 +48,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 CMD ["python", "main.py"]
 ```
-</details>
 
 ---
 
