@@ -34,6 +34,64 @@
   margin: 1rem 0;
 }
 
+.sensor-data {
+  background: #f8fafc;
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.sensor-data h3 {
+  margin-top: 0;
+  text-align: center;
+  color: #059669;
+  font-size: 1.1rem;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.sensor-item {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.sensor-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.status-indicator {
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.status-indicator.active {
+  background: #dcfce7;
+  border: 1px solid #16a34a;
+  color: #166534;
+}
+
+.status-indicator.inactive {
+  background: #fef2f2;
+  border: 1px solid #dc2626;
+  color: #991b1b;
+}
+
 .controls {
   margin: 2rem 0;
 }
@@ -107,5 +165,24 @@ button {
   .status p {
     font-size: 1.1rem;
     margin: 0;
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .sensor-item {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .sensor-data h3 {
+    font-size: 1.2rem;
+  }
+
+  .status-indicator {
+    padding: 0.75rem;
+    font-size: 1rem;
   }
 }
