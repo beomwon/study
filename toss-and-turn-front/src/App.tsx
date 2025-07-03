@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
@@ -10,9 +11,9 @@ function App() {
 
     if (
       typeof DeviceMotionEvent !== "undefined" &&
-      typeof DeviceMotionEvent.requestPermission === "function"
+      typeof (DeviceMotionEvent as any).requestPermission === "function"
     ) {
-      const permission = await DeviceMotionEvent.requestPermission();
+      const permission = await (DeviceMotionEvent as any).requestPermission();
       if (permission !== "granted") {
         alert("센서 권한이 필요합니다.");
         return;
@@ -28,7 +29,10 @@ function App() {
     window.addEventListener("devicemotion", (event) => {
       if (!isMeasuring) return;
 
-      const { x = 0, y = 0, z = 0 } = event.accelerationIncludingGravity ?? {};
+      const acceleration = event.accelerationIncludingGravity;
+      const x = acceleration?.x ?? 0;
+      const y = acceleration?.y ?? 0;
+      const z = acceleration?.z ?? 0;
       const magnitude = Math.sqrt(x * x + y * y + z * z);
       const delta = Math.abs(magnitude - lastMagnitude);
       const now = Date.now();
