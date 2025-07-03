@@ -186,3 +186,79 @@ button {
     font-size: 1rem;
   }
 }
+
+.sensor-data-container {
+  background: #f8fafc;
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.sensor-data-title {
+  margin-top: 0;
+  text-align: center;
+  color: #059669;
+  font-size: 1.1rem;
+}
+
+.sensor-explanation {
+  font-size: 0.7rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.sensor-explanation p {
+  margin: 0.2rem 0;
+}
+
+.sensor-data-status {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+}
+
+.sensor-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.sensor-item-data {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.sensor-status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.status-indicator-active {
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  background: #dcfce7;
+  border: 1px solid #16a34a;
+  color: #166534;
+}
+
+.status-indicator-inactive {
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  background: #fef2f2;
+  border: 1px solid #dc2626;
+  color: #991b1b;
+}

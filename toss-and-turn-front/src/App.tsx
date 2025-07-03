@@ -1,9 +1,8 @@
-// import { useEffect, useState } from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 
 function App() {
-  const [log, setLog] = useState<string[]>([]);
+  // const [log, setLog] = useState<string[]>([]); // 주석처리 - 화면에서 활동로그 숨김
   const [isMeasuring, setIsMeasuring] = useState(false);
   const [status, setStatus] = useState<string>("대기 중");
   const [deviceInfo, setDeviceInfo] = useState<string>("");
@@ -19,6 +18,17 @@ function App() {
     hasRotation: boolean;
   } | null>(null);
 
+  // 이벤트 리스너와 관련 변수들을 useRef로 관리
+  const eventListenerRef = useRef<((event: DeviceMotionEvent) => void) | null>(
+    null
+  );
+  const orientationListenerRef = useRef<
+    ((event: DeviceOrientationEvent) => void) | null
+  >(null);
+  const eventCountRef = useRef(0);
+  const lastMagnitudeRef = useRef(0);
+  const lastSentRef = useRef(0);
+
   const startMeasurement = async () => {
     setStatus("권한 요청 중...");
 
@@ -30,30 +40,25 @@ function App() {
       `${isIOS ? "iOS" : "Other"} - ${isSafari ? "Safari" : "Other Browser"}`
     );
 
-    setLog((prev) => [
-      ...prev,
-      `🔍 디바이스: ${isIOS ? "iOS" : "Other"}, 브라우저: ${
-        isSafari ? "Safari" : "Other"
-      }`,
-    ]);
+    // setLog((prev) => [...prev, `🔍 디바이스: ${isIOS ? "iOS" : "Other"}, 브라우저: ${isSafari ? "Safari" : "Other"}`]); // 주석처리
 
     try {
       // DeviceMotionEvent 지원 여부 확인
       if (typeof DeviceMotionEvent === "undefined") {
         setStatus("이 브라우저는 DeviceMotion을 지원하지 않습니다.");
-        setLog((prev) => [...prev, `❌ DeviceMotionEvent가 정의되지 않음`]);
+        // setLog((prev) => [...prev, `❌ DeviceMotionEvent가 정의되지 않음`]); // 주석처리
         return;
       }
 
-      setLog((prev) => [...prev, `✅ DeviceMotionEvent 지원됨`]);
+      // setLog((prev) => [...prev, `✅ DeviceMotionEvent 지원됨`]); // 주석처리
 
       // iOS 13+ 권한 요청
       if (typeof (DeviceMotionEvent as any).requestPermission === "function") {
-        setLog((prev) => [...prev, `🔐 iOS 권한 요청 필요`]);
+        // setLog((prev) => [...prev, `🔐 iOS 권한 요청 필요`]); // 주석처리
         setStatus("iOS 권한 요청 중...");
 
         const permission = await (DeviceMotionEvent as any).requestPermission();
-        setLog((prev) => [...prev, `🔐 권한 결과: ${permission}`]);
+        // setLog((prev) => [...prev, `🔐 권한 결과: ${permission}`]); // 주석처리
 
         if (permission !== "granted") {
           setStatus("센서 권한이 거부되었습니다.");
@@ -63,12 +68,9 @@ function App() {
           return;
         }
         setStatus("권한 허용됨");
-        setLog((prev) => [...prev, `✅ 권한 허용됨`]);
+        // setLog((prev) => [...prev, `✅ 권한 허용됨`]); // 주석처리
       } else {
-        setLog((prev) => [
-          ...prev,
-          `ℹ️ 권한 요청 불필요 (iOS 13 미만 또는 다른 OS)`,
-        ]);
+        // setLog((prev) => [...prev, `ℹ️ 권한 요청 불필요 (iOS 13 미만 또는 다른 OS)`]); // 주석처리
       }
 
       setIsMeasuring(true);
@@ -77,24 +79,30 @@ function App() {
       // 초기 센서 데이터 영역 표시
       setSensorData({
         eventCount: 0,
-        x: 0, y: 0, z: 0,
-        magnitude: 0, delta: 0,
+        x: 0,
+        y: 0,
+        z: 0,
+        magnitude: 0,
+        delta: 0,
         hasAccelWithGravity: false,
         hasAccel: false,
-        hasRotation: false
+        hasRotation: false,
       });
 
-      let lastMagnitude = 0;
-      let lastSent = 0;
-      let eventCount = 0;
+      // ref 변수들 초기화
+      eventCountRef.current = 0;
+      lastMagnitudeRef.current = 0;
+      lastSentRef.current = 0;
 
       const MIN_INTERVAL = 1000;
 
       const handleDeviceMotion = (event: DeviceMotionEvent) => {
-        eventCount++;
+        eventCountRef.current++;
 
-        if (!isMeasuring) return;
+        // 디버깅: 이벤트 발생 확인
+        // console.log(`센서 이벤트 ${eventCountRef.current} 발생, isMeasuring: ${isMeasuring}`);
 
+        // isMeasuring 체크를 나중에 하도록 변경
         const acceleration = event.accelerationIncludingGravity;
         const accel = event.acceleration;
         const rotationRate = event.rotationRate;
@@ -117,11 +125,15 @@ function App() {
             rotationRate.gamma !== null)
         );
 
+        // 디버깅: 센서 상태 로그
+        // console.log('센서 상태:', { hasAccelWithGravity, hasAccel, hasRotation });
+
         // 센서 데이터가 null인지 확인
         if (!acceleration) {
-          setStatus(`센서 데이터 없음 (이벤트 ${eventCount}번째)`);
+          console.log("센서 데이터 없음");
+          setStatus(`센서 데이터 없음 (이벤트 ${eventCountRef.current}번째)`);
           setSensorData({
-            eventCount,
+            eventCount: eventCountRef.current,
             x: 0,
             y: 0,
             z: 0,
@@ -138,11 +150,15 @@ function App() {
         const y = acceleration.y ?? 0;
         const z = acceleration.z ?? 0;
 
+        // 디버깅: 실제 센서 값 로그
+        // console.log(`센서 값: X=${x.toFixed(3)}, Y=${y.toFixed(3)}, Z=${z.toFixed(3)}`);
+
         // 모든 값이 0인지 확인
         if (x === 0 && y === 0 && z === 0) {
-          setStatus(`센서 값이 모두 0 (이벤트 ${eventCount}번째)`);
+          console.log("모든 센서 값이 0");
+          setStatus(`센서 값이 모두 0`);
           setSensorData({
-            eventCount,
+            eventCount: eventCountRef.current,
             x,
             y,
             z,
@@ -156,12 +172,15 @@ function App() {
         }
 
         const magnitude = Math.sqrt(x * x + y * y + z * z);
-        const delta = Math.abs(magnitude - lastMagnitude);
+        const delta = Math.abs(magnitude - lastMagnitudeRef.current);
         const now = Date.now();
 
-        // 실시간 센서 데이터 업데이트
-        setSensorData({
-          eventCount,
+        // 디버깅: 계산된 값들 로그
+        // console.log(`계산값: magnitude=${magnitude.toFixed(3)}, delta=${delta.toFixed(3)}`);
+
+        // 항상 센서 데이터 업데이트
+        const newSensorData = {
+          eventCount: eventCountRef.current,
           x,
           y,
           z,
@@ -170,51 +189,47 @@ function App() {
           hasAccelWithGravity,
           hasAccel,
           hasRotation,
-        });
+        };
 
-        // 상태 메시지 단순화
-        setStatus(`측정 중... 휴대폰을 움직여보세요!`);
+        // console.log('setSensorData 호출:', newSensorData);
+        setSensorData(newSensorData);
 
-        // 임계값을 낮춰서 더 민감하게 감지
-        const LOWER_THRESHOLD = 0.5;
+        // 상태 메시지도 항상 업데이트
+        // setStatus(`측정 중... 이벤트:${eventCountRef.current} 움직임:${delta.toFixed(2)} XYZ:(${x.toFixed(1)},${y.toFixed(1)},${z.toFixed(1)})`);
 
-        if (delta > LOWER_THRESHOLD && now - lastSent > MIN_INTERVAL) {
-          const time = new Date().toLocaleTimeString();
-          setLog((prev) => [
-            ...prev,
-            `📍 ${time} 움직임 감지! Δ=${delta.toFixed(2)}`,
-          ]);
-          lastSent = now;
+        // 움직임 감지 로그는 isMeasuring일 때만
+        if (isMeasuring) {
+          const LOWER_THRESHOLD = 0.5;
+
+          if (
+            delta > LOWER_THRESHOLD &&
+            now - lastSentRef.current > MIN_INTERVAL
+          ) {
+            // const time = new Date().toLocaleTimeString(); // 주석처리
+            // setLog((prev) => [...prev, `📍 ${time} 움직임 감지! Δ=${delta.toFixed(2)}`]); // 주석처리
+            lastSentRef.current = now;
+          }
         }
 
-        lastMagnitude = magnitude;
+        lastMagnitudeRef.current = magnitude;
       };
 
+      // 이벤트 리스너 참조 저장
+      eventListenerRef.current = handleDeviceMotion;
+
       window.addEventListener("devicemotion", handleDeviceMotion);
-      setLog((prev) => [...prev, `🎯 DeviceMotion 이벤트 리스너 등록됨`]);
+      // setLog((prev) => [...prev, `🎯 DeviceMotion 이벤트 리스너 등록됨`]); // 주석처리
 
       // 테스트용 로그 추가
-      setLog((prev) => [
-        ...prev,
-        `🚀 ${new Date().toLocaleTimeString()} 측정 시작됨`,
-      ]);
+      // setLog((prev) => [...prev, `🚀 ${new Date().toLocaleTimeString()} 측정 시작됨`]); // 주석처리
 
       // 5초 후 센서 작동 여부 확인
       setTimeout(() => {
-        if (eventCount === 0) {
+        if (eventCountRef.current === 0) {
           setStatus("⚠️ 센서 이벤트가 발생하지 않음");
-          setLog((prev) => [
-            ...prev,
-            `⚠️ 5초 동안 센서 이벤트 없음 - 다음을 확인해주세요:`,
-            `1. Safari 설정 > 개인정보 보호 및 보안 > 모션 및 방향 접근`,
-            `2. 설정 > Safari > 고급 > 웹사이트 데이터에서 권한 확인`,
-            `3. 페이지 새로고침 후 다시 시도`,
-          ]);
+          // setLog((prev) => [...prev, `⚠️ 5초 동안 센서 이벤트 없음 - 다음을 확인해주세요:`, `1. Safari 설정 > 개인정보 보호 및 보안 > 모션 및 방향 접근`, `2. 설정 > Safari > 고급 > 웹사이트 데이터에서 권한 확인`, `3. 페이지 새로고침 후 다시 시도`]); // 주석처리
         } else {
-          setLog((prev) => [
-            ...prev,
-            `✅ 5초간 ${eventCount}개 센서 이벤트 수신됨`,
-          ]);
+          // setLog((prev) => [...prev, `✅ 5초간 ${eventCountRef.current}개 센서 이벤트 수신됨`]); // 주석처리
         }
       }, 5000);
 
@@ -225,18 +240,14 @@ function App() {
 
         // DeviceOrientationEvent도 시도
         if (typeof DeviceOrientationEvent !== "undefined") {
-          const orientationHandler = (event: DeviceOrientationEvent) => {
-            if (eventCount <= 2) {
-              setLog((prev) => [
-                ...prev,
-                `🧭 방향 센서: α=${event.alpha?.toFixed(
-                  1
-                )}, β=${event.beta?.toFixed(1)}, γ=${event.gamma?.toFixed(1)}`,
-              ]);
+          const orientationHandler = (_event: DeviceOrientationEvent) => {
+            if (eventCountRef.current <= 2) {
+              // setLog((prev) => [...prev, `🧭 방향 센서: α=${event.alpha?.toFixed(1)}, β=${event.beta?.toFixed(1)}, γ=${event.gamma?.toFixed(1)}`]); // 주석처리
             }
           };
+          orientationListenerRef.current = orientationHandler;
           window.addEventListener("deviceorientation", orientationHandler);
-          setLog((prev) => [...prev, `🧭 DeviceOrientation 이벤트도 등록됨`]);
+          // setLog((prev) => [...prev, `🧭 DeviceOrientation 이벤트도 등록됨`]); // 주석처리
         }
       }
     } catch (error) {
@@ -248,19 +259,32 @@ function App() {
   const stopMeasurement = () => {
     setIsMeasuring(false);
     setStatus("측정 중지됨");
-    setLog((prev) => [
-      ...prev,
-      `⏹️ ${new Date().toLocaleTimeString()} 측정 중지됨`,
-    ]);
-    // 센서 데이터는 유지하지 않고 초기화
-    // setSensorData(null);
+    // setLog((prev) => [...prev, `⏹️ ${new Date().toLocaleTimeString()} 측정 중지됨`]); // 주석처리
+
+    // 이벤트 리스너 제거
+    if (eventListenerRef.current) {
+      window.removeEventListener("devicemotion", eventListenerRef.current);
+      eventListenerRef.current = null;
+      console.log("DeviceMotion 이벤트 리스너 제거됨");
+    }
+
+    if (orientationListenerRef.current) {
+      window.removeEventListener(
+        "deviceorientation",
+        orientationListenerRef.current
+      );
+      orientationListenerRef.current = null;
+      console.log("DeviceOrientation 이벤트 리스너 제거됨");
+    }
+
+    console.log("측정 중지 - 센서 데이터 유지");
   };
 
   return (
     <div className="app">
-      <h1>🌙 Toss and Turn</h1>
+      <h1>Toss and Turn</h1>
       <h2>수면 중 뒤척임 감지기</h2>
-      <p className="version">v1.6 - 실시간 센서 데이터 표시</p>
+      <p className="version">v1.7 - 활동로그제거 및 코드분리</p>
 
       {deviceInfo && (
         <div className="device-info">
@@ -277,31 +301,16 @@ function App() {
       </div>
 
       {sensorData && (
-        <div className="sensor-data" style={{
-          background: '#f8fafc',
-          border: '2px solid #10b981',
-          borderRadius: '8px',
-          padding: '1rem',
-          margin: '1rem 0',
-          textAlign: 'left'
-        }}>
-          <h3 style={{
-            marginTop: 0,
-            textAlign: 'center',
-            color: '#059669',
-            fontSize: '1.1rem'
-          }}>📊 실시간 센서 데이터</h3>
-          
-          <p style={{fontSize: '0.8rem', color: '#666', textAlign: 'center'}}>
-            sensorData 상태: {sensorData ? '✅ 존재함' : '❌ null'}
-          </p>
-          
-          <div className="sensor-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '0.5rem',
-            margin: '1rem 0'
-          }}>
+        <div className="sensor-data-container">
+          <h3 className="sensor-data-title">📊 실시간 센서 데이터</h3>
+
+          <div className="sensor-explanation">
+            <p>X축: 좌우움직임 | Y축: 위아래움직임 | Z축: 앞뒤움직임</p>
+            <p>합성값: 전체 움직임 크기 | 움직임: 이전과의 차이</p>
+          </div>
+
+          <div className="sensor-grid-container">
+            {/* 이벤트 수 주석처리 - 디버깅용
             <div className="sensor-item" style={{
               background: 'white',
               padding: '0.5rem',
@@ -312,108 +321,48 @@ function App() {
             }}>
               <strong>이벤트 수:</strong> {sensorData.eventCount}
             </div>
-            <div className="sensor-item" style={{
-              background: 'white',
-              padding: '0.5rem',
-              borderRadius: '4px',
-              border: '1px solid #d1d5db',
-              fontFamily: 'monospace',
-              fontSize: '0.9rem'
-            }}>
+            */}
+            <div className="sensor-item-data">
               <strong>X축:</strong> {sensorData.x.toFixed(3)}
             </div>
-            <div className="sensor-item" style={{
-              background: 'white',
-              padding: '0.5rem',
-              borderRadius: '4px',
-              border: '1px solid #d1d5db',
-              fontFamily: 'monospace',
-              fontSize: '0.9rem'
-            }}>
+            <div className="sensor-item-data">
               <strong>Y축:</strong> {sensorData.y.toFixed(3)}
             </div>
-            <div className="sensor-item" style={{
-              background: 'white',
-              padding: '0.5rem',
-              borderRadius: '4px',
-              border: '1px solid #d1d5db',
-              fontFamily: 'monospace',
-              fontSize: '0.9rem'
-            }}>
+            <div className="sensor-item-data">
               <strong>Z축:</strong> {sensorData.z.toFixed(3)}
             </div>
-            <div className="sensor-item" style={{
-              background: 'white',
-              padding: '0.5rem',
-              borderRadius: '4px',
-              border: '1px solid #d1d5db',
-              fontFamily: 'monospace',
-              fontSize: '0.9rem'
-            }}>
+            <div className="sensor-item-data">
               <strong>합성값:</strong> {sensorData.magnitude.toFixed(3)}
             </div>
-            <div className="sensor-item" style={{
-              background: 'white',
-              padding: '0.5rem',
-              borderRadius: '4px',
-              border: '1px solid #d1d5db',
-              fontFamily: 'monospace',
-              fontSize: '0.9rem'
-            }}>
-              <strong>움직임:</strong> {sensorData.delta.toFixed(3)}
+            <div className="sensor-item-data">
+              <strong>움직임 차이:</strong> {sensorData.delta.toFixed(3)}
             </div>
           </div>
-          <div className="sensor-status" style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem',
-            marginTop: '1rem'
-          }}>
+          <div className="sensor-status-container">
             <div
-              className={`status-indicator ${
-                sensorData.hasAccelWithGravity ? "active" : "inactive"
-              }`}
-              style={{
-                padding: '0.5rem',
-                borderRadius: '4px',
-                fontSize: '0.9rem',
-                textAlign: 'center',
-                background: sensorData.hasAccelWithGravity ? '#dcfce7' : '#fef2f2',
-                border: sensorData.hasAccelWithGravity ? '1px solid #16a34a' : '1px solid #dc2626',
-                color: sensorData.hasAccelWithGravity ? '#166534' : '#991b1b'
-              }}
+              className={
+                sensorData.hasAccelWithGravity
+                  ? "status-indicator-active"
+                  : "status-indicator-inactive"
+              }
             >
               중력포함가속도: {sensorData.hasAccelWithGravity ? "✅" : "❌"}
             </div>
             <div
-              className={`status-indicator ${
-                sensorData.hasAccel ? "active" : "inactive"
-              }`}
-              style={{
-                padding: '0.5rem',
-                borderRadius: '4px',
-                fontSize: '0.9rem',
-                textAlign: 'center',
-                background: sensorData.hasAccel ? '#dcfce7' : '#fef2f2',
-                border: sensorData.hasAccel ? '1px solid #16a34a' : '1px solid #dc2626',
-                color: sensorData.hasAccel ? '#166534' : '#991b1b'
-              }}
+              className={
+                sensorData.hasAccel
+                  ? "status-indicator-active"
+                  : "status-indicator-inactive"
+              }
             >
               가속도: {sensorData.hasAccel ? "✅" : "❌"}
             </div>
             <div
-              className={`status-indicator ${
-                sensorData.hasRotation ? "active" : "inactive"
-              }`}
-              style={{
-                padding: '0.5rem',
-                borderRadius: '4px',
-                fontSize: '0.9rem',
-                textAlign: 'center',
-                background: sensorData.hasRotation ? '#dcfce7' : '#fef2f2',
-                border: sensorData.hasRotation ? '1px solid #16a34a' : '1px solid #dc2626',
-                color: sensorData.hasRotation ? '#166534' : '#991b1b'
-              }}
+              className={
+                sensorData.hasRotation
+                  ? "status-indicator-active"
+                  : "status-indicator-inactive"
+              }
             >
               회전: {sensorData.hasRotation ? "✅" : "❌"}
             </div>
@@ -433,6 +382,7 @@ function App() {
         )}
       </div>
 
+      {/* 활동 로그 주석처리 - 화면 정리용
       <div className="log">
         <h3>활동 로그 (최근 10개)</h3>
         {log.length === 0 ? (
@@ -445,6 +395,7 @@ function App() {
           ))
         )}
       </div>
+      */}
     </div>
   );
 }
