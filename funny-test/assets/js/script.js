@@ -351,7 +351,18 @@ document.addEventListener("DOMContentLoaded", function () {
   initCarousel();
   initHorizontalScroll();
   initAdBanner();
+  initHoroscopeBanner();
 });
+
+// 별자리 운세 배너 초기화
+function initHoroscopeBanner() {
+  const horoscopeBtn = document.getElementById("horoscopeBtn");
+  if (horoscopeBtn) {
+    horoscopeBtn.addEventListener("click", () => {
+      window.location.href = "horoscope.html";
+    });
+  }
+}
 
 // 광고 배너 초기화
 function initAdBanner() {

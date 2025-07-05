@@ -529,3 +529,110 @@ body {
   position: relative;
   z-index: 2;
 }
+
+/* 별자리 운세 배너 */
+.horoscope-banner {
+  margin: 20px 0;
+}
+
+.horoscope-content {
+  margin: 0 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 32px 24px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.horoscope-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 16px;
+  text-align: right;
+}
+
+.horoscope-text {
+  flex: 1;
+}
+
+.horoscope-icon {
+  font-size: 32px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg);
+    opacity: 0.8;
+  }
+}
+
+.horoscope-text h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+}
+
+.horoscope-text p {
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.horoscope-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.horoscope-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .horoscope-content {
+    min-height: 120px;
+    padding: 24px 20px;
+  }
+
+  .horoscope-header {
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .horoscope-button {
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+  }
+}
