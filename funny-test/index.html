@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공유해조제발</title>
+
+    <!-- 파비콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/images/favicon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/images/favicon.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/images/favicon.png"
+    />
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-wrapper">
+      <!-- 헤더 -->
+      <header class="header">
+        <div class="container">
+          <h1 class="logo">SOOP</h1>
+        </div>
+      </header>
+
+      <!-- 메인 콘텐츠 -->
+      <main class="main">
+        <!-- 메인 캐러셀 -->
+        <section class="carousel-section">
+          <div class="carousel-container">
+            <div class="carousel-wrapper" id="mainCarousel">
+              <div
+                class="carousel-slide active"
+                data-test="psychology"
+                style="background-image: url('assets/images/teto.png')"
+              >
+                <div class="slide-content">
+                  <h2 class="slide-title">테토녀 vs 에겐녀</h2>
+                  <p class="slide-subtitle">당신은 어떤 타입일까요?</p>
+                </div>
+              </div>
+              <div class="carousel-slide" data-test="mbti">
+                <div class="slide-content">
+                  <h2 class="slide-title">MBTI 성격 테스트</h2>
+                  <p class="slide-subtitle">16가지 성격 유형 중 나는?</p>
+                </div>
+              </div>
+              <div class="carousel-slide" data-test="mindtest">
+                <div class="slide-content">
+                  <h2 class="slide-title">심리 테스트</h2>
+                  <p class="slide-subtitle">숨겨진 나의 심리 상태</p>
+                </div>
+              </div>
+              <div class="carousel-slide" data-test="love">
+                <div class="slide-content">
+                  <h2 class="slide-title">연애 스타일 테스트</h2>
+                  <p class="slide-subtitle">나의 연애 스타일은?</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 캐러셀 네비게이션 -->
+            <div class="carousel-nav">
+              <button class="nav-btn prev" id="prevBtn">‹</button>
+              <button class="nav-btn next" id="nextBtn">›</button>
+            </div>
+
+            <!-- 캐러셀 인디케이터 -->
+            <div class="carousel-indicators">
+              <span class="indicator active" data-slide="0"></span>
+              <span class="indicator" data-slide="1"></span>
+              <span class="indicator" data-slide="2"></span>
+              <span class="indicator" data-slide="3"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 중간 배너 광고 -->
+        <section class="middle-ad">
+          <div class="ad-banner">
+            <div class="ad-content">
+              <div class="ad-text">
+                <span class="ad-label">광고</span>
+                <h4 class="ad-title">🎁 특별 할인 이벤트!</h4>
+                <p class="ad-description">
+                  지금 가입하면 프리미엄 테스트 무료!
+                </p>
+              </div>
+              <button class="ad-button">자세히 보기</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 최신 테스트 섹션 -->
+        <section class="latest-tests">
+          <div class="container">
+            <div class="section-header">
+              <h3 class="section-title">😍 최신 심리테스트</h3>
+            </div>
+
+            <div class="horizontal-scroll-container">
+              <div class="test-list" id="testList">
+                <div class="test-item" data-test="job">
+                  <div class="test-thumbnail">
+                    <div class="test-emoji">🎯</div>
+                  </div>
+                  <div class="test-info">
+                    <h4 class="test-name">직업 적성 테스트</h4>
+                    <p class="test-desc">나에게 맞는 직업은?</p>
+                    <div class="test-stats">
+                      <span class="participants">👥 2.4만</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="test-item" data-test="animal">
+                  <div class="test-thumbnail">
+                    <div class="test-emoji">🐾</div>
+                  </div>
+                  <div class="test-info">
+                    <h4 class="test-name">동물상 테스트</h4>
+                    <p class="test-desc">나와 닮은 동물은?</p>
+                    <div class="test-stats">
+                      <span class="participants">👥 3.5만</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="test-item" data-test="color">
+                  <div class="test-thumbnail">
+                    <div class="test-emoji">🎨</div>
+                  </div>
+                  <div class="test-info">
+                    <h4 class="test-name">컬러 심리 테스트</h4>
+                    <p class="test-desc">색깔로 보는 성격</p>
+                    <div class="test-stats">
+                      <span class="participants">👥 1.8만</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="test-item" data-test="character">
+                  <div class="test-thumbnail">
+                    <div class="test-emoji">🎭</div>
+                  </div>
+                  <div class="test-info">
+                    <h4 class="test-name">캐릭터 테스트</h4>
+                    <p class="test-desc">나는 어떤 캐릭터?</p>
+                    <div class="test-stats">
+                      <span class="participants">👥 4.2만</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="test-item" data-test="fortune">
+                  <div class="test-thumbnail">
+                    <div class="test-emoji">🔮</div>
+                  </div>
+                  <div class="test-info">
+                    <h4 class="test-name">운세 테스트</h4>
+                    <p class="test-desc">오늘의 운세는?</p>
+                    <div class="test-stats">
+                      <span class="participants">👥 2.9만</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 스크롤 버튼 -->
+              <div class="scroll-nav">
+                <button class="scroll-btn left" id="scrollLeft">‹</button>
+                <button class="scroll-btn right" id="scrollRight">›</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- 구글 애즈 푸터 -->
+      <footer class="google-ads-footer">
+        <!-- 여기에 구글 애즈 코드를 삽입하세요 -->
+        <div id="google-ads-container">
+          <!-- 구글 애즈 광고 단위가 여기에 표시됩니다 -->
+        </div>
+      </footer>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>

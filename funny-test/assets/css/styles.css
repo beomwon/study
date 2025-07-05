@@ -1,0 +1,531 @@
+/* 폰트 정의 */
+@font-face {
+  font-family: "PartialSansKR-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 기본 리셋 및 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "GmarketSansMedium", "Segoe UI", Tahoma, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+/* 모바일 앱 스타일 래퍼 */
+.app-wrapper {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: #ffffff;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 헤더 */
+.header {
+  background: #ffffff;
+  padding: 0.5rem 0;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: "PartialSansKR-Regular", "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: #333;
+  margin: 0;
+}
+
+/* 메인 콘텐츠 */
+.main {
+  padding-bottom: 2rem;
+}
+
+/* 캐러셀 섹션 */
+.carousel-section {
+  margin-bottom: 2rem;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.carousel-wrapper {
+  display: flex;
+  width: 400%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  width: 25%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.carousel-slide:nth-child(2) {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.carousel-slide:nth-child(3) {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.carousel-slide:nth-child(4) {
+  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+}
+
+.slide-content {
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+
+.slide-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.slide-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slide-subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 캐러셀 네비게이션 */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  opacity: 0;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-container:hover .nav-btn {
+  opacity: 1;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* 캐러셀 인디케이터 */
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* 최신 테스트 섹션 */
+.latest-tests {
+  padding: 0;
+}
+
+.section-header {
+  padding: 0 20px;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* 수평 스크롤 컨테이너 */
+.horizontal-scroll-container {
+  position: relative;
+}
+
+.test-list {
+  display: flex;
+  gap: 15px;
+  padding: 0 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.test-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* 테스트 아이템 */
+.test-item {
+  flex: 0 0 150px;
+  background: white;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.test-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.test-thumbnail {
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+.test-emoji {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.test-info {
+  text-align: center;
+}
+
+.test-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #333;
+  line-height: 1.3;
+}
+
+.test-desc {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.test-stats {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* 스크롤 네비게이션 */
+.scroll-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  pointer-events: none;
+}
+
+.scroll-btn {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  opacity: 0;
+  backdrop-filter: blur(10px);
+}
+
+.horizontal-scroll-container:hover .scroll-btn {
+  opacity: 1;
+}
+
+.scroll-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.scroll-btn:active {
+  transform: scale(0.95);
+}
+
+/* 드래그 방지 */
+.test-list {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 중간 배너 광고 */
+.middle-ad {
+  margin: 2rem 0;
+}
+
+.ad-banner {
+  margin: 0 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.ad-banner::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20px;
+  width: 100px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: rotate(15deg);
+}
+
+.ad-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ad-text {
+  flex: 1;
+  color: white;
+}
+
+.ad-label {
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-bottom: 0.3rem;
+  display: inline-block;
+}
+
+.ad-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.3rem 0 0.2rem 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ad-description {
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+.ad-button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.ad-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 구글 애즈 푸터 */
+.google-ads-footer {
+  background: #f8f9fa;
+  padding: 1rem 0;
+  border-top: 1px solid #e9ecef;
+  margin-top: 2rem;
+}
+
+#google-ads-container {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  min-height: 90px; /* 구글 애즈 배너 높이 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 구글 애즈 로딩 중 표시 */
+#google-ads-container::before {
+  content: "광고 로딩 중...";
+  color: #999;
+  font-size: 0.8rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 400px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .slide-title {
+    font-size: 1.5rem;
+  }
+
+  .slide-emoji {
+    font-size: 3rem;
+  }
+
+  .test-item {
+    flex: 0 0 130px;
+    padding: 0.8rem;
+  }
+
+  .test-emoji {
+    font-size: 2rem;
+  }
+
+  .test-name {
+    font-size: 0.85rem;
+  }
+
+  .ad-banner {
+    margin: 0 15px;
+    padding: 0.8rem;
+  }
+
+  .ad-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.8rem;
+  }
+
+  .ad-button {
+    margin-left: 0;
+    width: 100%;
+    max-width: 150px;
+  }
+
+  #google-ads-container {
+    padding: 0 15px;
+  }
+}
+
+/* 배경 이미지가 있는 슬라이드에 어두운 오버레이 추가 */
+.carousel-slide[style*="background-image"] {
+  position: relative;
+}
+
+.carousel-slide[style*="background-image"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.carousel-slide[style*="background-image"] .slide-content {
+  position: relative;
+  z-index: 2;
+}

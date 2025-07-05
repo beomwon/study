@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60">
+  <rect width="200" height="60" fill="#ff6b9d" rx="10"/>
+  <text x="100" y="25" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">테토녀 vs 에겐녀</text>
+  <text x="100" y="45" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">당신은 어떤 타입?</text>
+</svg>

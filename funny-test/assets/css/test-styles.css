@@ -1,0 +1,378 @@
+/* 테스트 페이지 전용 스타일 */
+
+/* 테스트 시작 화면 */
+.test-intro {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.intro-content {
+  max-width: 100%;
+}
+
+.intro-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.intro-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.intro-subtitle {
+  font-size: 1.3rem;
+  color: #666;
+  margin-bottom: 1rem;
+  font-weight: normal;
+}
+
+.intro-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.type-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.type-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 120px;
+}
+
+.type-card.tetoto {
+  border: 2px solid #ff6b9d;
+}
+
+.type-card.egen {
+  border: 2px solid #667eea;
+}
+
+.type-card.mbti {
+  border: 2px solid #4facfe;
+}
+
+.type-card.love {
+  border: 2px solid #fcb69f;
+}
+
+.type-card.mind {
+  border: 2px solid #43e97b;
+}
+
+.type-emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.type-card h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.type-card p {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+.type-vs {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #999;
+}
+
+.start-btn {
+  background: linear-gradient(45deg, #ff6b9d, #667eea);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+}
+
+/* 테스트 진행 화면 */
+.test-progress {
+  padding: 2rem 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(45deg, #ff6b9d, #667eea);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.question-counter {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.question-container {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.question-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.answer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.answer-btn {
+  background: white;
+  border: 2px solid #f0f0f0;
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  color: #333;
+}
+
+.answer-btn:hover {
+  border-color: #ff6b9d;
+  background: #fff5f8;
+  transform: translateY(-2px);
+}
+
+.answer-btn.selected {
+  border-color: #ff6b9d;
+  background: linear-gradient(45deg, #ff6b9d, #667eea);
+  color: white;
+}
+
+/* 테스트 결과 화면 */
+.test-result {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.result-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.result-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.result-percentage {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.percentage-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tetoto-bar,
+.egen-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.percentage-label {
+  font-weight: bold;
+  min-width: 60px;
+  text-align: left;
+}
+
+.tetoto-bar .percentage-label {
+  color: #ff6b9d;
+}
+
+.egen-bar .percentage-label {
+  color: #667eea;
+}
+
+.bar {
+  flex: 1;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1s ease;
+}
+
+.tetoto-fill {
+  background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+}
+
+.egen-fill {
+  background: linear-gradient(45deg, #667eea, #8a9bff);
+}
+
+.percentage-value {
+  font-weight: bold;
+  min-width: 50px;
+  text-align: right;
+}
+
+.result-description {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.retry-btn,
+.share-btn,
+.home-btn {
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.retry-btn {
+  background: linear-gradient(45deg, #ff6b9d, #667eea);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+}
+
+.retry-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+}
+
+.share-btn {
+  background: #f8f9fa;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.share-btn:hover {
+  background: #e9ecef;
+  transform: scale(1.05);
+}
+
+.home-btn {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.home-btn:hover {
+  background: #667eea;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 400px) {
+  .type-preview {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .type-vs {
+    transform: rotate(90deg);
+    margin: 0.5rem 0;
+  }
+
+  .type-card {
+    max-width: 200px;
+    width: 100%;
+  }
+
+  .question-container {
+    padding: 1.5rem;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+  }
+
+  .tetoto-bar,
+  .egen-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .percentage-label,
+  .percentage-value {
+    min-width: auto;
+  }
+}
