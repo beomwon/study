@@ -605,7 +605,7 @@ body {
   transition: all 0.3s ease;
   white-space: nowrap;
   align-self: flex-end;
-  margin-top: auto;
+  margin-top: 20px;
   margin-right: 0;
   text-align: right;
 }
