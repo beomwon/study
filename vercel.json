@@ -1,6 +1,0 @@
-{
-  "rootDirectory": "funny-test/front",
-  "outputDirectory": ".",
-  "cleanUrls": true,
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
