@@ -1,5 +1,5 @@
 from supabase import create_client, Client
-from config import settings
+from .config import settings
 
 class Database:
     def __init__(self):

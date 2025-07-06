@@ -1,10 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-import uvicorn
-
-from config import settings
-from routes import api
+from app.core import settings
+from app.api import router
 
 # FastAPI 앱 생성
 app = FastAPI(
@@ -24,7 +21,7 @@ app.add_middleware(
 )
 
 # 라우터 등록
-app.include_router(api.router, prefix="/api/v1")
+app.include_router(router, prefix="/api/v1")
 
 # 기본 라우트
 @app.get("/")
@@ -45,20 +42,8 @@ async def health_check():
         "environment": settings.ENVIRONMENT
     }
 
-# 전역 예외 처리
-@app.exception_handler(Exception)
-async def global_exception_handler(request, exc):
-    """전역 예외 처리기"""
-    return JSONResponse(
-        status_code=500,
-        content={
-            "success": False,
-            "message": "서버 내부 오류가 발생했습니다.",
-            "detail": str(exc) if settings.DEBUG else "Internal server error"
-        }
-    )
-
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(
         "main:app",
         host=settings.API_HOST,
