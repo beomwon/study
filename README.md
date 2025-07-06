@@ -9,3 +9,11 @@
 
 - 뒤척임 감지 웹을 만드는 저장소입니다.
 - vite, typescript와 AI를 활용한 프론트엔드를 공부합니다.
+- 사이트 주소: https://beomwon.github.io/study/
+
+## 3. [soop (funny-test)] (https://github.com/beomwon/study/tree/main/funny-test)
+
+- 각종 테스트나 지루할때 이용하는 사이트를 만들어보는 저장소입니다.
+- 혼자서 만들어보는 곳이라 깔끔하게 만들지 못합니다.
+- frontend는 vercel, backend는 cloudtype, database는 supabase를 이용합니다.
+- 사이트 주소: https://www.soop.run
