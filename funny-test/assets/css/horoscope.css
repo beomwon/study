@@ -1,3 +1,9 @@
+@import url("../fonts/GowunDodum-Regular.css");
+
+body {
+  font-family: "Gowun Dodum", sans-serif;
+}
+
 /* 별자리 운세 페이지 스타일 */
 
 /* 헤더 스타일 */
@@ -133,9 +139,12 @@
 }
 
 .zodiac-title {
-  font-size: 24px;
+  font-size: 20px; /* 글씨 크기 축소 */
   font-weight: bold;
-  margin: 0 0 8px 0;
+  margin: 0;
+  white-space: nowrap; /* 한 줄로 표시 */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .today-date {
@@ -179,7 +188,7 @@
 /* 행운/주의 요소 */
 .fortune-items {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   margin-bottom: 30px;
 }
@@ -204,24 +213,34 @@
   margin-bottom: 16px;
 }
 
-.item-grid {
+.item-details {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
 }
 
-.item-detail {
+.detail-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.detail-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .detail-label {
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .detail-value {
@@ -258,13 +277,13 @@
 }
 
 .score-icon {
-  font-size: 20px;
-}
-
-.score-name {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #e8e8e8;
 }
 
 .score-bar {
@@ -328,6 +347,148 @@
   box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
 }
 
+/* 한 줄 요약 스타일 */
+.fortune-summary {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 4px solid #007bff;
+}
+
+.summary-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+/* 종합 운세 스타일 */
+.total-fortune {
+  background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.total-info {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.total-score,
+.lucky-level {
+  text-align: center;
+  flex: 1;
+}
+
+.score-label,
+.level-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.score-value,
+.level-value {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e53e3e;
+}
+
+/* 오늘의 팁 스타일 */
+.today-tips {
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.tips-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.tip-item {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tip-item.recommended {
+  border-left: 4px solid #38a169;
+}
+
+.tip-item.avoid {
+  border-left: 4px solid #e53e3e;
+}
+
+.tip-label {
+  font-weight: 600;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.tip-value {
+  color: #666;
+  text-align: right;
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+/* 궁합 정보 스타일 */
+.compatibility {
+  background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.compatibility-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.compatibility-item {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.compatibility-item.good {
+  border-left: 4px solid #d69e2e;
+}
+
+.compatibility-item.bad {
+  border-left: 4px solid #e53e3e;
+}
+
+.compatibility-label {
+  font-weight: 600;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.compatibility-value {
+  color: #666;
+  text-align: right;
+  flex-grow: 1;
+  margin-left: 10px;
+  font-weight: 600;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .zodiac-grid {
@@ -367,6 +528,28 @@
   .score-header {
     justify-content: center;
   }
+
+  .total-info {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .tip-item,
+  .compatibility-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .tip-value,
+  .compatibility-value {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .item-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
@@ -384,5 +567,281 @@
 
   .zodiac-title {
     font-size: 20px;
+  }
+}
+
+/* 랭킹 버튼 스타일 */
+.ranking-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.ranking-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+/* 랭킹 리스트 스타일 */
+.ranking-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.ranking-item {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ranking-item:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.15);
+}
+
+.rank-number {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.ranking-item[data-rank="1"] .rank-number {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #333;
+}
+
+.ranking-item[data-rank="2"] .rank-number {
+  background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+  color: #333;
+}
+
+.ranking-item[data-rank="3"] .rank-number {
+  background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
+  color: white;
+}
+
+.zodiac-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 90px;
+  flex-shrink: 0;
+}
+
+.zodiac-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+.zodiac-period {
+  font-size: 12px;
+  color: #666;
+  margin-top: 0;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.score-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.score-stars {
+  font-size: 14px;
+  color: #ffc107;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+.score-point {
+  font-size: 12px;
+  font-weight: 600;
+  color: #667eea;
+  margin-top: 2px;
+}
+
+.detail-link {
+  color: #667eea;
+  font-size: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.detail-link:hover {
+  color: #5a6fd8;
+  text-decoration: underline;
+}
+
+/* 모바일 반응형 스타일 */
+@media (max-width: 768px) {
+  .ranking-list {
+    padding: 0 12px;
+  }
+
+  .ranking-item {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .rank-number {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .zodiac-info {
+    min-width: 80px;
+  }
+
+  .zodiac-name {
+    font-size: 15px;
+  }
+
+  .zodiac-period {
+    font-size: 11px;
+  }
+
+  .score-stars {
+    font-size: 13px;
+  }
+
+  .score-point {
+    font-size: 11px;
+  }
+
+  .detail-link {
+    font-size: 13px;
+  }
+
+  .item-details {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .detail-item {
+    padding: 10px 14px;
+  }
+
+  .detail-label {
+    font-size: 12px;
+  }
+
+  .detail-value {
+    font-size: 13px;
+  }
+
+  .item-title {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+}
+
+.details-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.item-label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.item-value {
+  font-size: 15px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .ranking-item {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .rank-number {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .rank-name {
+    font-size: 16px;
+  }
+
+  .rank-score {
+    font-size: 16px;
+  }
+
+  .rank-icon {
+    font-size: 20px;
+  }
+
+  .fortune-details {
+    flex-direction: column;
+  }
+
+  .fortune-section {
+    padding: 15px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .rank-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ranking-btn {
+    width: 100%;
+    max-width: 250px;
   }
 }

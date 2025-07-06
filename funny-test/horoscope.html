@@ -46,71 +46,33 @@
         <section class="zodiac-selection" id="zodiacSelection">
           <div class="container">
             <div class="section-header">
-              <h2 class="page-title">🌟 오늘의 별자리 운세</h2>
+              <h2 class="page-title">오늘의 별자리 운세</h2>
               <p class="page-subtitle">당신의 별자리를 선택해주세요</p>
+              <button class="ranking-btn" id="rankingBtn">
+                오늘의 별자리 랭킹
+              </button>
             </div>
 
-            <div class="zodiac-grid">
-              <div class="zodiac-item" data-sign="aries">
-                <div class="zodiac-icon">♈</div>
-                <div class="zodiac-name">양자리</div>
-                <div class="zodiac-date">3.21 ~ 4.19</div>
-              </div>
-              <div class="zodiac-item" data-sign="taurus">
-                <div class="zodiac-icon">♉</div>
-                <div class="zodiac-name">황소자리</div>
-                <div class="zodiac-date">4.20 ~ 5.20</div>
-              </div>
-              <div class="zodiac-item" data-sign="gemini">
-                <div class="zodiac-icon">♊</div>
-                <div class="zodiac-name">쌍둥이자리</div>
-                <div class="zodiac-date">5.21 ~ 6.21</div>
-              </div>
-              <div class="zodiac-item" data-sign="cancer">
-                <div class="zodiac-icon">♋</div>
-                <div class="zodiac-name">게자리</div>
-                <div class="zodiac-date">6.22 ~ 7.22</div>
-              </div>
-              <div class="zodiac-item" data-sign="leo">
-                <div class="zodiac-icon">♌</div>
-                <div class="zodiac-name">사자자리</div>
-                <div class="zodiac-date">7.23 ~ 8.22</div>
-              </div>
-              <div class="zodiac-item" data-sign="virgo">
-                <div class="zodiac-icon">♍</div>
-                <div class="zodiac-name">처녀자리</div>
-                <div class="zodiac-date">8.23 ~ 9.22</div>
-              </div>
-              <div class="zodiac-item" data-sign="libra">
-                <div class="zodiac-icon">♎</div>
-                <div class="zodiac-name">천칭자리</div>
-                <div class="zodiac-date">9.23 ~ 10.22</div>
-              </div>
-              <div class="zodiac-item" data-sign="scorpio">
-                <div class="zodiac-icon">♏</div>
-                <div class="zodiac-name">전갈자리</div>
-                <div class="zodiac-date">10.23 ~ 11.22</div>
-              </div>
-              <div class="zodiac-item" data-sign="sagittarius">
-                <div class="zodiac-icon">♐</div>
-                <div class="zodiac-name">사수자리</div>
-                <div class="zodiac-date">11.23 ~ 12.21</div>
-              </div>
-              <div class="zodiac-item" data-sign="capricorn">
-                <div class="zodiac-icon">♑</div>
-                <div class="zodiac-name">염소자리</div>
-                <div class="zodiac-date">12.22 ~ 1.19</div>
-              </div>
-              <div class="zodiac-item" data-sign="aquarius">
-                <div class="zodiac-icon">♒</div>
-                <div class="zodiac-name">물병자리</div>
-                <div class="zodiac-date">1.20 ~ 2.18</div>
-              </div>
-              <div class="zodiac-item" data-sign="pisces">
-                <div class="zodiac-icon">♓</div>
-                <div class="zodiac-name">물고기자리</div>
-                <div class="zodiac-date">2.19 ~ 3.20</div>
-              </div>
+            <div class="zodiac-grid" id="zodiacGrid">
+              <!-- 별자리 아이템들이 JavaScript로 동적 생성됩니다 -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 별자리 랭킹 섹션 -->
+        <section
+          class="zodiac-ranking"
+          id="zodiacRanking"
+          style="display: none"
+        >
+          <div class="container">
+            <div class="section-header">
+              <h2 class="page-title">오늘의 별자리 랭킹</h2>
+              <p class="page-subtitle">오늘 가장 운이 좋은 별자리는?</p>
+            </div>
+
+            <div class="ranking-list" id="rankingList">
+              <!-- 랭킹 아이템들이 JavaScript로 동적 생성됩니다 -->
             </div>
           </div>
         </section>
@@ -133,9 +95,32 @@
             </div>
 
             <div class="fortune-content">
+              <!-- 한 줄 요약 -->
+              <div class="fortune-summary">
+                <h4 class="section-title">한 줄 요약</h4>
+                <p class="summary-text" id="summaryMessage">
+                  새로운 시작의 기운이 강한 날
+                </p>
+              </div>
+
+              <!-- 종합 운세 정보 -->
+              <div class="total-fortune">
+                <h4 class="section-title">종합 운세</h4>
+                <div class="total-info">
+                  <div class="total-score">
+                    <span class="score-label">총운</span>
+                    <span class="score-value" id="totalScore">85점</span>
+                  </div>
+                  <div class="lucky-level">
+                    <span class="level-label">행운 지수</span>
+                    <span class="level-value" id="luckyLevel">좋음</span>
+                  </div>
+                </div>
+              </div>
+
               <!-- 오늘의 운세 멘트 -->
               <div class="fortune-message">
-                <h4 class="section-title">💫 오늘의 운세</h4>
+                <h4 class="section-title">오늘의 운세</h4>
                 <p class="fortune-text" id="fortuneMessage">
                   오늘은 새로운 시작을 알리는 날입니다. 평소보다 적극적인 자세로
                   임하면 좋은 결과를 얻을 수 있을 것 같습니다.
@@ -146,49 +131,59 @@
               <div class="fortune-items">
                 <div class="fortune-item lucky">
                   <h4 class="item-title">🍀 행운의 요소</h4>
-                  <div class="item-grid">
-                    <div class="item-detail">
-                      <span class="detail-label">컬러</span>
+                  <div class="item-details">
+                    <div class="detail-item">
+                      <span class="detail-label">색상</span>
                       <span class="detail-value" id="luckyColor">빨간색</span>
                     </div>
-                    <div class="item-detail">
+                    <div class="detail-item">
                       <span class="detail-label">숫자</span>
                       <span class="detail-value" id="luckyNumber">7</span>
                     </div>
-                    <div class="item-detail">
-                      <span class="detail-label">단어</span>
-                      <span class="detail-value" id="luckyWord">도전</span>
+                    <div class="detail-item">
+                      <span class="detail-label">아이템</span>
+                      <span class="detail-value" id="luckyItem">반지</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">시간</span>
+                      <span class="detail-value" id="luckyTime">오후</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">방향</span>
+                      <span class="detail-value" id="luckyDirection">남쪽</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">키워드</span>
+                      <span class="detail-value" id="luckyWord">희망</span>
                     </div>
                   </div>
                 </div>
-
                 <div class="fortune-item warning">
                   <h4 class="item-title">⚠️ 피해야 할 요소</h4>
-                  <div class="item-grid">
-                    <div class="item-detail">
-                      <span class="detail-label">컬러</span>
-                      <span class="detail-value" id="avoidColor">검은색</span>
+                  <div class="item-details">
+                    <div class="detail-item">
+                      <span class="detail-label">색상</span>
+                      <span class="detail-value" id="avoidColor">검정색</span>
                     </div>
-                    <div class="item-detail">
+                    <div class="detail-item">
                       <span class="detail-label">숫자</span>
-                      <span class="detail-value" id="avoidNumber">4</span>
+                      <span class="detail-value" id="avoidNumber">13</span>
                     </div>
-                    <div class="item-detail">
-                      <span class="detail-label">단어</span>
-                      <span class="detail-value" id="avoidWord">포기</span>
+                    <div class="detail-item">
+                      <span class="detail-label">키워드</span>
+                      <span class="detail-value" id="avoidWord">갈등</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <!-- 운세 점수 -->
-              <div class="fortune-scores">
-                <h4 class="section-title">📊 오늘의 운세 점수</h4>
+              <div class="fortune-scores" id="fortuneScores">
+                <h4 class="section-title">분야별 운세 점수</h4>
                 <div class="scores-grid">
                   <div class="score-item">
                     <div class="score-header">
-                      <span class="score-icon">💕</span>
-                      <span class="score-name">연애운</span>
+                      <span class="score-icon">연애운</span>
                     </div>
                     <div class="score-bar">
                       <div
@@ -202,8 +197,7 @@
 
                   <div class="score-item">
                     <div class="score-header">
-                      <span class="score-icon">📚</span>
-                      <span class="score-name">학업운</span>
+                      <span class="score-icon">학업운</span>
                     </div>
                     <div class="score-bar">
                       <div
@@ -217,8 +211,7 @@
 
                   <div class="score-item">
                     <div class="score-header">
-                      <span class="score-icon">💰</span>
-                      <span class="score-name">금전운</span>
+                      <span class="score-icon">금전운</span>
                     </div>
                     <div class="score-bar">
                       <div
@@ -232,8 +225,7 @@
 
                   <div class="score-item">
                     <div class="score-header">
-                      <span class="score-icon">💪</span>
-                      <span class="score-name">건강운</span>
+                      <span class="score-icon">건강운</span>
                     </div>
                     <div class="score-bar">
                       <div
@@ -243,6 +235,58 @@
                       ></div>
                     </div>
                     <span class="score-value">2/5</span>
+                  </div>
+
+                  <div class="score-item">
+                    <div class="score-header">
+                      <span class="score-icon">인간관계운</span>
+                    </div>
+                    <div class="score-bar">
+                      <div
+                        class="score-fill"
+                        id="relationshipScore"
+                        data-score="4"
+                      ></div>
+                    </div>
+                    <span class="score-value">4/5</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 오늘의 팁 -->
+              <div class="today-tips">
+                <h4 class="section-title">오늘의 팁</h4>
+                <div class="tips-grid">
+                  <div class="tip-item recommended">
+                    <span class="tip-label">추천 활동</span>
+                    <span class="tip-value" id="recommendedActivity"
+                      >새로운 사람들과의 만남</span
+                    >
+                  </div>
+                  <div class="tip-item avoid">
+                    <span class="tip-label">피해야 할 것</span>
+                    <span class="tip-value" id="thingToAvoid"
+                      >감정적인 결정</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- 궁합 정보 -->
+              <div class="compatibility">
+                <h4 class="section-title">오늘의 궁합</h4>
+                <div class="compatibility-grid">
+                  <div class="compatibility-item good">
+                    <span class="compatibility-label">좋은 궁합</span>
+                    <span class="compatibility-value" id="compatibleSign"
+                      >사자자리</span
+                    >
+                  </div>
+                  <div class="compatibility-item bad">
+                    <span class="compatibility-label">주의할 별자리</span>
+                    <span class="compatibility-value" id="incompatibleSign"
+                      >전갈자리</span
+                    >
                   </div>
                 </div>
               </div>
@@ -266,6 +310,7 @@
       </footer>
     </div>
 
+    <script src="assets/js/fortuneData.js"></script>
     <script src="assets/js/horoscope.js"></script>
   </body>
 </html>

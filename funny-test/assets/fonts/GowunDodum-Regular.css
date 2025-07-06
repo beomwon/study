@@ -1,0 +1,12 @@
+/*
+ * Copyright 2021 The Gowun Dodum Project Authors.
+ * Released under the SIL Open Font License, Version 1.1.
+ */
+
+@font-face {
+  font-family: "Gowun Dodum";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff")
+    format("woff");
+}

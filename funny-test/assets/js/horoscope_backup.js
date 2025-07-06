@@ -14,22 +14,6 @@ const zodiacInfo = {
   pisces: { name: "물고기자리", symbol: "♓", period: "2.19 ~ 3.20" },
 };
 
-// 별자리 순서 (표시 순서)
-const zodiacOrder = [
-  "aries",
-  "taurus",
-  "gemini",
-  "cancer",
-  "leo",
-  "virgo",
-  "libra",
-  "scorpio",
-  "sagittarius",
-  "capricorn",
-  "aquarius",
-  "pisces",
-];
-
 // 날짜 기반 시드 생성 함수
 function getDailySeed() {
   const today = new Date();
@@ -187,6 +171,7 @@ const zodiacRanking = document.getElementById("zodiacRanking");
 const backBtn = document.getElementById("backBtn");
 const changeSignBtn = document.getElementById("changeSignBtn");
 const rankingBtn = document.getElementById("rankingBtn");
+const backToSelectionBtn = document.getElementById("backToSelectionBtn");
 
 // 오늘 날짜 설정
 function setTodayDate() {
@@ -198,84 +183,6 @@ function setTodayDate() {
   if (todayDateElement) {
     todayDateElement.textContent = `${year}년 ${month}월 ${date}일`;
   }
-}
-
-// 별자리 그리드 생성
-function generateZodiacGrid() {
-  const zodiacGrid = document.getElementById("zodiacGrid");
-  if (!zodiacGrid) return;
-
-  zodiacGrid.innerHTML = "";
-
-  zodiacOrder.forEach((sign) => {
-    const info = zodiacInfo[sign];
-    const zodiacItem = document.createElement("div");
-    zodiacItem.className = "zodiac-item";
-    zodiacItem.dataset.sign = sign;
-
-    zodiacItem.innerHTML = `
-      <div class="zodiac-icon">${info.symbol}</div>
-      <div class="zodiac-name">${info.name}</div>
-      <div class="zodiac-date">${info.period}</div>
-    `;
-
-    // 클릭 이벤트 추가
-    zodiacItem.addEventListener("click", () => {
-      showHoroscopeResult(sign);
-    });
-
-    zodiacGrid.appendChild(zodiacItem);
-  });
-}
-
-// 랭킹 리스트 생성
-function generateRankingList() {
-  const rankingList = document.getElementById("rankingList");
-  if (!rankingList) return;
-
-  const ranking = generateTodaysRanking();
-  rankingList.innerHTML = "";
-
-  ranking.forEach((zodiacKey, index) => {
-    const data = todaysFortuneData[zodiacKey];
-    const info = zodiacInfo[zodiacKey];
-
-    const rankingItem = document.createElement("div");
-    rankingItem.className = "ranking-item";
-    rankingItem.dataset.sign = zodiacKey;
-    rankingItem.dataset.rank = index + 1;
-
-    const stars =
-      "★".repeat(Math.floor(data.totalScore / 20)) +
-      "☆".repeat(5 - Math.floor(data.totalScore / 20));
-
-    rankingItem.innerHTML = `
-      <div class="rank-number">${index + 1}</div>
-      <div class="zodiac-info">
-        <div class="zodiac-name">${data.name}</div>
-        <div class="zodiac-period">${info.period}</div>
-      </div>
-      <div class="score-info">
-        <div class="score-stars">${stars}</div>
-        <div class="score-point">${data.totalScore}점</div>
-      </div>
-      <div class="detail-link" data-sign="${zodiacKey}">자세히보기 ></div>
-    `;
-
-    // 자세히보기 링크 클릭 이벤트
-    const detailLink = rankingItem.querySelector(".detail-link");
-    detailLink.addEventListener("click", (e) => {
-      e.stopPropagation();
-      showHoroscopeResult(zodiacKey);
-    });
-
-    // 랭킹 아이템 클릭 이벤트 (전체 영역)
-    rankingItem.addEventListener("click", () => {
-      showHoroscopeResult(zodiacKey);
-    });
-
-    rankingList.appendChild(rankingItem);
-  });
 }
 
 // 별자리 클릭 이벤트
@@ -311,17 +218,12 @@ function showHoroscopeResult(sign) {
   const luckyLevelElement = document.getElementById("luckyLevel");
   if (luckyLevelElement) luckyLevelElement.textContent = data.luckyLevel;
 
-  // 행운/주의 요소 개별 업데이트
-  document.getElementById("luckyColor").textContent = data.lucky.color;
-  document.getElementById("luckyNumber").textContent = data.lucky.number;
-  document.getElementById("luckyItem").textContent = data.lucky.item;
-  document.getElementById("luckyTime").textContent = data.lucky.time;
-  document.getElementById("luckyDirection").textContent = data.lucky.direction;
-  document.getElementById("luckyWord").textContent = data.lucky.word;
+  // 행운/주의 요소 2줄 요약 생성
+  const luckySummary = `행운의 색: ${data.lucky.color}, 숫자: ${data.lucky.number}, 아이템: ${data.lucky.item}`;
+  const avoidSummary = `피해야 할 색: ${data.avoid.color}, 숫자: ${data.avoid.number}, 단어: ${data.avoid.word}`;
 
-  document.getElementById("avoidColor").textContent = data.avoid.color;
-  document.getElementById("avoidNumber").textContent = data.avoid.number;
-  document.getElementById("avoidWord").textContent = data.avoid.word;
+  document.getElementById("luckySummary").textContent = luckySummary;
+  document.getElementById("avoidSummary").textContent = avoidSummary;
 
   // 총운 점수 업데이트 (있는 경우)
   const totalScoreElement = document.getElementById("totalScore");
@@ -385,8 +287,56 @@ function updateScores(scores) {
 
 // 랭킹 페이지의 데이터 업데이트
 function updateRankingDisplay() {
-  // 동적 생성으로 대체되어 더 이상 필요하지 않음
-  // generateRankingList()에서 모든 업데이트를 처리
+  const ranking = generateTodaysRanking();
+  const rankingItems = document.querySelectorAll(".ranking-item");
+
+  ranking.forEach((zodiacKey, index) => {
+    const data = todaysFortuneData[zodiacKey];
+    const rankItem = document.querySelector(`[data-rank="${index + 1}"]`);
+
+    if (rankItem) {
+      // 별자리 정보 업데이트
+      rankItem.dataset.sign = zodiacKey;
+
+      const rankIcon = rankItem.querySelector(".rank-icon");
+      const rankName = rankItem.querySelector(".rank-name");
+      const rankScore = rankItem.querySelector(".rank-score");
+
+      if (rankIcon) rankIcon.textContent = data.symbol;
+      if (rankName) rankName.textContent = data.name;
+      if (rankScore) {
+        const stars =
+          "★".repeat(Math.floor(data.totalScore / 20)) +
+          "☆".repeat(5 - Math.floor(data.totalScore / 20));
+        rankScore.textContent = stars;
+      }
+
+      // 상세 정보 업데이트
+      const detailSymbol = rankItem.querySelector(".detail-symbol");
+      const detailTitle = rankItem.querySelector(".detail-info h4");
+      const detailSubtitle = rankItem.querySelector(".detail-info p");
+      const fortuneText = rankItem.querySelector(".fortune-text");
+
+      if (detailSymbol) detailSymbol.textContent = data.symbol;
+      if (detailTitle)
+        detailTitle.textContent = `${data.name} (${data.period})`;
+      if (detailSubtitle)
+        detailSubtitle.textContent = `총운 ${data.totalScore}점 | ${data.luckyLevel}`;
+      if (fortuneText)
+        fortuneText.textContent = data.summaryMessage || data.message;
+
+      // 행운의 요소 업데이트 (기존 3개 유지)
+      const colorValue = rankItem.querySelector(".detail-value:nth-of-type(1)");
+      const numberValue = rankItem.querySelector(
+        ".detail-value:nth-of-type(2)"
+      );
+      const wordValue = rankItem.querySelector(".detail-value:nth-of-type(3)");
+
+      if (colorValue) colorValue.textContent = data.lucky.color;
+      if (numberValue) numberValue.textContent = data.lucky.number;
+      if (wordValue) wordValue.textContent = data.lucky.word;
+    }
+  });
 }
 
 // 랭킹 페이지 표시
@@ -405,58 +355,27 @@ function showZodiacSelection() {
   window.scrollTo(0, 0);
 }
 
-// 초기화
-document.addEventListener("DOMContentLoaded", () => {
-  // 오늘의 운세 데이터 생성
-  todaysFortuneData = generateAllTodaysFortuneData();
-
-  // DOM 설정
-  setTodayDate();
-  setupZodiacSelection();
-  setupBackButton();
-  setupChangeSignButton();
-  setupRankingButton();
-  setupRankingToggle();
-
-  // 별자리 그리드 생성
-  generateZodiacGrid();
-
-  // 랭킹 리스트 생성
-  generateRankingList();
-
-  // 랭킹 페이지 데이터 업데이트
-  updateRankingDisplay();
-
-  // 페이지 로드 시 랭킹 페이지 표시
-  showRanking();
-});
-
-// 페이지 로드 시 점수 바 초기화
-window.addEventListener("load", () => {
-  const scoreFills = document.querySelectorAll(".score-fill");
-  scoreFills.forEach((fill) => {
-    fill.style.width = "0%";
-  });
-});
-
 // 랭킹 아이템 토글 - 별자리를 클릭하면 상세 내용 표시
 function setupRankingToggle() {
-  // 동적 생성으로 대체되어 더 이상 필요하지 않음
-  // generateRankingList()에서 이벤트 리스너를 직접 추가
+  const rankingItems = document.querySelectorAll(".ranking-item");
+
+  rankingItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const sign = item.dataset.sign;
+
+      // 랭킹에서 바로 운세 결과 페이지로 이동
+      if (sign && todaysFortuneData[sign]) {
+        showHoroscopeResult(sign);
+      }
+    });
+  });
 }
 
 // 뒤로가기 버튼
 function setupBackButton() {
   if (backBtn) {
     backBtn.addEventListener("click", () => {
-      // 현재 표시된 페이지에 따라 다른 동작 수행
-      if (horoscopeResult.style.display === "block") {
-        // 운세 상세 페이지에서는 랭킹 페이지로
-        showRanking();
-      } else {
-        // 랭킹 페이지나 별자리 선택 페이지에서는 index.html로
-        window.location.href = "index.html";
-      }
+      window.location.href = "index.html";
     });
   }
 }
@@ -478,3 +397,41 @@ function setupRankingButton() {
     });
   }
 }
+
+// 별자리 선택으로 돌아가기 버튼 - 랭킹 페이지로 이동
+function setupBackToSelectionButton() {
+  if (backToSelectionBtn) {
+    backToSelectionBtn.addEventListener("click", () => {
+      showRanking();
+    });
+  }
+}
+
+// 초기화
+document.addEventListener("DOMContentLoaded", () => {
+  // 오늘의 운세 데이터 생성
+  todaysFortuneData = generateAllTodaysFortuneData();
+
+  // DOM 설정
+  setTodayDate();
+  setupZodiacSelection();
+  setupBackButton();
+  setupChangeSignButton();
+  setupRankingButton();
+  setupBackToSelectionButton();
+  setupRankingToggle();
+
+  // 랭킹 페이지 데이터 업데이트
+  updateRankingDisplay();
+
+  // 페이지 로드 시 바로 랭킹 페이지 표시
+  showRanking();
+});
+
+// 페이지 로드 시 점수 바 초기화
+window.addEventListener("load", () => {
+  const scoreFills = document.querySelectorAll(".score-fill");
+  scoreFills.forEach((fill) => {
+    fill.style.width = "0%";
+  });
+});
