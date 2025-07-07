@@ -26,6 +26,18 @@
     <link rel="shortcut icon" href="assets/images/favicon.png" />
 
     <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <!-- Supabase CDN -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+    <!-- 환경변수 주입 스크립트 -->
+    <script>
+      // Vercel에서 환경변수를 주입하기 위한 스크립트
+      window.ENV = {
+        VITE_SUPABASE_URL: "%VITE_SUPABASE_URL%",
+        VITE_SUPABASE_ANON_KEY: "%VITE_SUPABASE_ANON_KEY%",
+      };
+    </script>
   </head>
   <body>
     <div class="app-wrapper">
@@ -88,6 +100,19 @@
           </div>
         </section>
 
+        <!-- 오늘의 TMI 섹션 -->
+        <section class="tmi-section">
+          <div class="container">
+            <div class="tmi-content">
+              <div class="tmi-text-container">
+                <p class="tmi-text" id="tmiContent">
+                  <span class="loading">재미있는 TMI를 불러오는 중...</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- 오늘의 별자리 운세 배너 -->
         <section class="horoscope-banner">
           <div
@@ -109,6 +134,75 @@
           </div>
         </section>
 
+        <!-- 최신 테스트 섹션 -->
+        <section class="latest-tests">
+          <div class="section-header">
+            <h3 class="section-title">😍 최신 심리테스트</h3>
+          </div>
+
+          <div class="horizontal-scroll-container">
+            <div class="test-list" id="testList">
+              <div class="test-item" data-test="job">
+                <div class="test-thumbnail">
+                  <div class="test-emoji">🎯</div>
+                </div>
+                <div class="test-info">
+                  <h4 class="test-name">직업 적성 테스트</h4>
+                  <p class="test-desc">나에게 맞는 직업은?</p>
+                  <div class="test-stats">
+                    <span class="participants">👥 2.4만</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="test-item" data-test="animal">
+                <div class="test-thumbnail">
+                  <div class="test-emoji">🐾</div>
+                </div>
+                <div class="test-info">
+                  <h4 class="test-name">동물상 테스트</h4>
+                  <p class="test-desc">나와 닮은 동물은?</p>
+                  <div class="test-stats">
+                    <span class="participants">👥 3.5만</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="test-item" data-test="color">
+                <div class="test-thumbnail">
+                  <div class="test-emoji">🎨</div>
+                </div>
+                <div class="test-info">
+                  <h4 class="test-name">컬러 심리 테스트</h4>
+                  <p class="test-desc">색깔로 보는 성격</p>
+                  <div class="test-stats">
+                    <span class="participants">👥 1.8만</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="test-item" data-test="character">
+                <div class="test-thumbnail">
+                  <div class="test-emoji">🎭</div>
+                </div>
+                <div class="test-info">
+                  <h4 class="test-name">캐릭터 테스트</h4>
+                  <p class="test-desc">나는 어떤 캐릭터?</p>
+                  <div class="test-stats">
+                    <span class="participants">👥 4.2만</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 스크롤 버튼 -->
+            <div class="scroll-nav">
+              <button class="scroll-btn left" id="scrollLeft">‹</button>
+              <button class="scroll-btn right" id="scrollRight">›</button>
+            </div>
+          </div>
+        </section>
+
         <!-- 중간 배너 광고 -->
         <section class="middle-ad">
           <div class="ad-banner">
@@ -124,77 +218,6 @@
             </div>
           </div>
         </section>
-
-        <!-- 최신 테스트 섹션 -->
-        <section class="latest-tests">
-          <div class="container">
-            <div class="section-header">
-              <h3 class="section-title">😍 최신 심리테스트</h3>
-            </div>
-
-            <div class="horizontal-scroll-container">
-              <div class="test-list" id="testList">
-                <div class="test-item" data-test="job">
-                  <div class="test-thumbnail">
-                    <div class="test-emoji">🎯</div>
-                  </div>
-                  <div class="test-info">
-                    <h4 class="test-name">직업 적성 테스트</h4>
-                    <p class="test-desc">나에게 맞는 직업은?</p>
-                    <div class="test-stats">
-                      <span class="participants">👥 2.4만</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="test-item" data-test="animal">
-                  <div class="test-thumbnail">
-                    <div class="test-emoji">🐾</div>
-                  </div>
-                  <div class="test-info">
-                    <h4 class="test-name">동물상 테스트</h4>
-                    <p class="test-desc">나와 닮은 동물은?</p>
-                    <div class="test-stats">
-                      <span class="participants">👥 3.5만</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="test-item" data-test="color">
-                  <div class="test-thumbnail">
-                    <div class="test-emoji">🎨</div>
-                  </div>
-                  <div class="test-info">
-                    <h4 class="test-name">컬러 심리 테스트</h4>
-                    <p class="test-desc">색깔로 보는 성격</p>
-                    <div class="test-stats">
-                      <span class="participants">👥 1.8만</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="test-item" data-test="character">
-                  <div class="test-thumbnail">
-                    <div class="test-emoji">🎭</div>
-                  </div>
-                  <div class="test-info">
-                    <h4 class="test-name">캐릭터 테스트</h4>
-                    <p class="test-desc">나는 어떤 캐릭터?</p>
-                    <div class="test-stats">
-                      <span class="participants">👥 4.2만</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 스크롤 버튼 -->
-              <div class="scroll-nav">
-                <button class="scroll-btn left" id="scrollLeft">‹</button>
-                <button class="scroll-btn right" id="scrollRight">›</button>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
 
       <!-- 구글 애즈 푸터 -->
@@ -206,6 +229,7 @@
       </footer>
     </div>
 
+    <script src="assets/js/config.js"></script>
     <script src="assets/js/script.js"></script>
   </body>
 </html>

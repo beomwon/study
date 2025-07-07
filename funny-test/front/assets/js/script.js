@@ -2,6 +2,9 @@
 let currentSlide = 0;
 const totalSlides = 4;
 
+// Supabase 클라이언트 (전역에서 사용하기 위해)
+let supabase;
+
 // 캐러셀 기능
 function initCarousel() {
   const carousel = document.getElementById("mainCarousel");
@@ -348,11 +351,88 @@ function redirectToTest(testType) {
 
 // 페이지 로드 시 초기화
 document.addEventListener("DOMContentLoaded", function () {
+  // Supabase 클라이언트 초기화
+  initSupabase();
+
   initCarousel();
   initHorizontalScroll();
   initAdBanner();
   initHoroscopeBanner();
+  loadTodayTMI();
 });
+
+// Supabase 클라이언트 초기화
+function initSupabase() {
+  try {
+    if (!window.SUPABASE_CONFIG) {
+      throw new Error("Supabase 설정이 없습니다. config.js를 확인해주세요.");
+    }
+
+    supabase = window.supabase.createClient(
+      window.SUPABASE_CONFIG.url,
+      window.SUPABASE_CONFIG.anonKey
+    );
+    console.log("Supabase 클라이언트가 초기화되었습니다.");
+  } catch (error) {
+    console.error("Supabase 초기화 오류:", error);
+  }
+}
+
+// 오늘의 TMI 로드 (Supabase 직접 접근)
+async function loadTodayTMI() {
+  try {
+    if (!supabase) {
+      throw new Error("Supabase 클라이언트가 초기화되지 않았습니다.");
+    }
+
+    // 오늘 날짜 구하기 (YYYY-MM-DD 형식)
+    const today = new Date().toISOString().split("T")[0];
+
+    // Supabase에서 오늘 날짜의 TMI 데이터 조회
+    const { data, error } = await supabase
+      .from(window.TMI_TABLE_NAME || "tmi")
+      .select("*")
+      .eq("date", today)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (data) {
+      const tmiContent = document.getElementById("tmiContent");
+      const tmiDate = document.getElementById("tmiDate");
+
+      // 날짜 포맷팅 (예: 7월 7일)
+      const date = new Date(data.date);
+      const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+
+      tmiContent.textContent = data.content;
+      tmiDate.textContent = formattedDate;
+    } else {
+      throw new Error("오늘의 TMI 데이터를 찾을 수 없습니다.");
+    }
+  } catch (error) {
+    console.error("TMI 로딩 오류:", error);
+    const tmiContent = document.getElementById("tmiContent");
+
+    // 에러 타입에 따른 메시지 표시
+    if (error.message.includes("Supabase") || error.message.includes("설정")) {
+      tmiContent.innerHTML =
+        '<span class="error">🔧 Supabase 설정을 확인해주세요.</span>';
+    } else if (error.message.includes("찾을 수 없습니다")) {
+      tmiContent.innerHTML =
+        '<span class="error">📅 오늘의 TMI가 준비되지 않았습니다.</span>';
+    } else if (error.code === "PGRST116") {
+      // 테이블이나 컬럼을 찾을 수 없는 경우
+      tmiContent.innerHTML =
+        '<span class="error">🗃️ TMI 테이블을 확인해주세요.</span>';
+    } else {
+      tmiContent.innerHTML =
+        '<span class="error">🤔 TMI를 불러오는데 실패했습니다.</span>';
+    }
+  }
+}
 
 // 별자리 운세 배너 초기화
 function initHoroscopeBanner() {
