@@ -36,8 +36,24 @@
       window.ENV = {
         VITE_SUPABASE_URL: "%VITE_SUPABASE_URL%",
         VITE_SUPABASE_ANON_KEY: "%VITE_SUPABASE_ANON_KEY%",
+        VITE_SUPABASE_KEY: "%VITE_SUPABASE_KEY%",
       };
+
+      // 디버깅을 위한 로그
+      console.log("🌍 환경변수 상태:", {
+        url:
+          window.ENV.VITE_SUPABASE_URL !== "%VITE_SUPABASE_URL%" ? "✅" : "❌",
+        anonKey:
+          window.ENV.VITE_SUPABASE_ANON_KEY !== "%VITE_SUPABASE_ANON_KEY%"
+            ? "✅"
+            : "❌",
+        key:
+          window.ENV.VITE_SUPABASE_KEY !== "%VITE_SUPABASE_KEY%" ? "✅" : "❌",
+      });
     </script>
+
+    <!-- 로컬 개발용: 아래 주석을 해제하고 env.local.js 파일을 설정하세요 -->
+    <script src="assets/js/env.local.js"></script>
   </head>
   <body>
     <div class="app-wrapper">
@@ -104,6 +120,10 @@
         <section class="tmi-section">
           <div class="container">
             <div class="tmi-content">
+              <div class="tmi-header">
+                <div class="tmi-title">💡 오늘의 한줄지식</div>
+                <div class="tmi-date-display" id="tmiDateDisplay"></div>
+              </div>
               <div class="tmi-text-container">
                 <p class="tmi-text" id="tmiContent">
                   <span class="loading">재미있는 TMI를 불러오는 중...</span>

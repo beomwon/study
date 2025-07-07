@@ -1,0 +1,25 @@
+{
+  "name": "funny-test-front",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "재미있는 심리테스트 프론트엔드",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev:api": "node dev-server.js",
+    "dev:full": "concurrently \"npm run dev:api\" \"npm run dev\"",
+    "test:local": "echo '로컬 테스트: http://localhost:3000' && echo 'API 테스트: http://localhost:3001/api/tmi'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "concurrently": "^8.0.0"
+  }
+}

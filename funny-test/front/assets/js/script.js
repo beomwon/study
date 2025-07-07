@@ -351,6 +351,9 @@ function redirectToTest(testType) {
 
 // 페이지 로드 시 초기화
 document.addEventListener("DOMContentLoaded", function () {
+  // 오래된 TMI 캐시 정리 (로컬 스토리지용)
+  cleanupOldTMICache();
+
   // Supabase 클라이언트 초기화
   initSupabase();
 
@@ -358,28 +361,109 @@ document.addEventListener("DOMContentLoaded", function () {
   initHorizontalScroll();
   initAdBanner();
   initHoroscopeBanner();
-  loadTodayTMI();
+  loadTodayTMIFromAPI(); // API 엔드포인트 사용으로 변경
 });
 
 // Supabase 클라이언트 초기화
 function initSupabase() {
   try {
+    // 먼저 Supabase 라이브러리가 로드되었는지 확인
+    if (!window.supabase) {
+      throw new Error("Supabase 라이브러리가 로드되지 않았습니다.");
+    }
+
+    // config.js에서 설정이 로드되었는지 확인
     if (!window.SUPABASE_CONFIG) {
       throw new Error("Supabase 설정이 없습니다. config.js를 확인해주세요.");
+    }
+
+    console.log("🔧 Supabase 설정 확인:", window.SUPABASE_CONFIG);
+
+    // anonKey가 유효한지 확인
+    if (
+      !window.SUPABASE_CONFIG.anonKey ||
+      window.SUPABASE_CONFIG.anonKey === "your-anon-key"
+    ) {
+      console.warn(
+        "⚠️ Supabase ANON KEY가 설정되지 않았습니다. 환경변수를 확인해주세요."
+      );
+      // 하지만 계속 진행 (fallback 처리를 위해)
     }
 
     supabase = window.supabase.createClient(
       window.SUPABASE_CONFIG.url,
       window.SUPABASE_CONFIG.anonKey
     );
-    console.log("Supabase 클라이언트가 초기화되었습니다.");
+
+    console.log("✅ Supabase 클라이언트가 초기화되었습니다.");
   } catch (error) {
-    console.error("Supabase 초기화 오류:", error);
+    console.error("❌ Supabase 초기화 오류:", error);
+    // 오류가 있어도 계속 진행 (fallback TMI를 위해)
   }
 }
 
-// 오늘의 TMI 로드 (Supabase 직접 접근)
-async function loadTodayTMI() {
+// API 엔드포인트를 통한 TMI 로드 (글로벌 캐싱)
+async function loadTodayTMIFromAPI() {
+  const tmiContent = document.getElementById("tmiContent");
+  const tmiDateDisplay = document.getElementById("tmiDateDisplay");
+
+  if (!tmiContent) {
+    console.warn("TMI 콘텐츠 엘리먼트를 찾을 수 없습니다.");
+    return;
+  }
+
+  try {
+    console.log("🌐 API에서 글로벌 캐시된 TMI 데이터 요청...");
+
+    // API 엔드포인트로 요청 (서버에서 24시간 글로벌 캐싱)
+    const response = await fetch("/api/tmi", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      // API 엔드포인트가 없으면 fallback으로 직접 Supabase 사용
+      console.warn(
+        "⚠️ API 엔드포인트 사용 불가, Supabase 직접 사용으로 fallback"
+      );
+      await loadTodayTMIFallback();
+      return;
+    }
+
+    const result = await response.json();
+
+    if (result.success && result.data) {
+      console.log("✅ 글로벌 캐시 TMI 데이터 로드 성공:", result);
+
+      // TMI 표시
+      displayTMI(result.data, tmiContent, tmiDateDisplay);
+
+      // 캐싱 정보 로그
+      if (result.cached) {
+        console.log("📦 서버 글로벌 캐시 데이터 사용됨 (모든 사용자 공유)");
+      } else {
+        console.log("🆕 새로운 데이터 로드 후 글로벌 캐시 생성됨");
+      }
+    } else {
+      throw new Error("API에서 유효한 TMI 데이터를 받지 못했습니다.");
+    }
+  } catch (error) {
+    console.error("❌ API TMI 로딩 오류:", error);
+
+    // API 실패 시 기존 방식으로 fallback
+    await loadTodayTMIFallback();
+  }
+}
+
+// Fallback: 직접 Supabase 사용 (기존 방식)
+async function loadTodayTMIFallback() {
+  const tmiContent = document.getElementById("tmiContent");
+  const tmiDateDisplay = document.getElementById("tmiDateDisplay");
+
+  console.log("🔄 Fallback: 직접 Supabase 연결 시도...");
+
   try {
     if (!supabase) {
       throw new Error("Supabase 클라이언트가 초기화되지 않았습니다.");
@@ -400,38 +484,216 @@ async function loadTodayTMI() {
     }
 
     if (data) {
-      const tmiContent = document.getElementById("tmiContent");
-      const tmiDate = document.getElementById("tmiDate");
-
-      // 날짜 포맷팅 (예: 7월 7일)
-      const date = new Date(data.date);
-      const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일`;
-
-      tmiContent.textContent = data.content;
-      tmiDate.textContent = formattedDate;
+      console.log("✅ Fallback Supabase TMI 데이터 로드 성공:", data);
+      displayTMI(data, tmiContent, tmiDateDisplay);
     } else {
       throw new Error("오늘의 TMI 데이터를 찾을 수 없습니다.");
     }
   } catch (error) {
-    console.error("TMI 로딩 오류:", error);
-    const tmiContent = document.getElementById("tmiContent");
-
-    // 에러 타입에 따른 메시지 표시
-    if (error.message.includes("Supabase") || error.message.includes("설정")) {
-      tmiContent.innerHTML =
-        '<span class="error">🔧 Supabase 설정을 확인해주세요.</span>';
-    } else if (error.message.includes("찾을 수 없습니다")) {
-      tmiContent.innerHTML =
-        '<span class="error">📅 오늘의 TMI가 준비되지 않았습니다.</span>';
-    } else if (error.code === "PGRST116") {
-      // 테이블이나 컬럼을 찾을 수 없는 경우
-      tmiContent.innerHTML =
-        '<span class="error">🗃️ TMI 테이블을 확인해주세요.</span>';
-    } else {
-      tmiContent.innerHTML =
-        '<span class="error">🤔 TMI를 불러오는데 실패했습니다.</span>';
-    }
+    console.error("❌ Fallback TMI 로딩도 실패:", error);
+    // 마지막 resort: 하드코딩된 fallback TMI
+    showFallbackTMI();
   }
+}
+
+// 오늘의 TMI 로드 (Supabase 직접 접근 + 로컬 캐싱) - 기존 함수 유지 (fallback용)
+async function loadTodayTMI() {
+  const tmiContent = document.getElementById("tmiContent");
+  const tmiDateDisplay = document.getElementById("tmiDateDisplay");
+
+  if (!tmiContent) {
+    console.warn("TMI 콘텐츠 엘리먼트를 찾을 수 없습니다.");
+    return;
+  }
+
+  // 오늘 날짜 구하기 (YYYY-MM-DD 형식)
+  const today = new Date().toISOString().split("T")[0];
+  const cacheKey = `tmi_${today}`;
+
+  // 로컬 스토리지에서 오늘의 TMI 캐시 확인
+  const cachedTMI = getCachedTMI(cacheKey);
+  if (cachedTMI) {
+    console.log("📦 캐시된 TMI 데이터 사용:", cachedTMI);
+    displayTMI(cachedTMI, tmiContent, tmiDateDisplay);
+    return;
+  }
+
+  try {
+    if (!supabase) {
+      throw new Error("Supabase 클라이언트가 초기화되지 않았습니다.");
+    }
+
+    console.log("🌐 Supabase에서 새로운 TMI 데이터 요청...");
+
+    // Supabase에서 오늘 날짜의 TMI 데이터 조회
+    const { data, error } = await supabase
+      .from(window.TMI_TABLE_NAME || "tmi")
+      .select("*")
+      .eq("date", today)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (data) {
+      console.log("✅ TMI 데이터 로드 성공:", data);
+
+      // 로컬 스토리지에 캐시 저장
+      cacheTMI(cacheKey, data);
+
+      // TMI 표시
+      displayTMI(data, tmiContent, tmiDateDisplay);
+    } else {
+      throw new Error("오늘의 TMI 데이터를 찾을 수 없습니다.");
+    }
+  } catch (error) {
+    console.error("❌ TMI 로딩 오류:", error);
+
+    // Fallback TMI 표시
+    showFallbackTMI();
+  }
+}
+
+// TMI 캐시 저장 함수
+function cacheTMI(cacheKey, data) {
+  try {
+    const cacheData = {
+      data: data,
+      timestamp: Date.now(),
+      date: new Date().toISOString().split("T")[0],
+    };
+    localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+    console.log("💾 TMI 데이터 캐시 저장됨:", cacheKey);
+  } catch (error) {
+    console.warn("⚠️ 로컬 스토리지 저장 실패:", error);
+  }
+}
+
+// TMI 캐시 조회 함수
+function getCachedTMI(cacheKey) {
+  try {
+    const cached = localStorage.getItem(cacheKey);
+    if (!cached) return null;
+
+    const cacheData = JSON.parse(cached);
+    const today = new Date().toISOString().split("T")[0];
+
+    // 캐시된 데이터가 오늘 것인지 확인
+    if (cacheData.date === today) {
+      return cacheData.data;
+    } else {
+      // 오래된 캐시 삭제
+      localStorage.removeItem(cacheKey);
+      console.log("🧹 오래된 TMI 캐시 삭제됨:", cacheKey);
+      return null;
+    }
+  } catch (error) {
+    console.warn("⚠️ 캐시 조회 실패:", error);
+    return null;
+  }
+}
+
+// TMI 표시 함수
+function displayTMI(data, tmiContent, tmiDateDisplay) {
+  // 날짜 포맷팅 (예: 7월 7일)
+  const date = new Date(data.date);
+  const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+
+  // 날짜를 헤더에 표시
+  if (tmiDateDisplay) {
+    tmiDateDisplay.textContent = formattedDate;
+  }
+
+  // TMI 내용만 표시
+  tmiContent.textContent = data.content;
+}
+
+// 오래된 TMI 캐시 정리 함수
+function cleanupOldTMICache() {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    const keysToDelete = [];
+
+    // 로컬 스토리지에서 TMI 캐시 키들 찾기
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith("tmi_")) {
+        const cached = localStorage.getItem(key);
+        if (cached) {
+          try {
+            const cacheData = JSON.parse(cached);
+            // 오늘이 아닌 캐시는 삭제 대상
+            if (cacheData.date !== today) {
+              keysToDelete.push(key);
+            }
+          } catch (e) {
+            // 파싱 오류가 있는 캐시도 삭제 대상
+            keysToDelete.push(key);
+          }
+        }
+      }
+    }
+
+    // 오래된 캐시 삭제
+    keysToDelete.forEach((key) => {
+      localStorage.removeItem(key);
+      console.log("🧹 오래된 캐시 삭제:", key);
+    });
+
+    if (keysToDelete.length > 0) {
+      console.log(
+        `✨ ${keysToDelete.length}개의 오래된 TMI 캐시가 정리되었습니다.`
+      );
+    }
+  } catch (error) {
+    console.warn("⚠️ 캐시 정리 중 오류:", error);
+  }
+}
+
+// Fallback TMI 표시 함수
+function showFallbackTMI() {
+  const tmiContent = document.getElementById("tmiContent");
+  const tmiDateDisplay = document.getElementById("tmiDateDisplay");
+
+  if (!tmiContent) return;
+
+  // 오늘 날짜 기반 fallback TMI 목록
+  const fallbackTMIs = [
+    "오늘은 새로운 시작을 위한 완벽한 날입니다! ✨",
+    "작은 변화가 큰 기쁨을 가져다 줄 것입니다 🌟",
+    "당신의 미소가 누군가에게 희망이 될 수 있어요 😊",
+    "오늘 하루도 당신답게 빛나세요! 🌈",
+    "긍정적인 에너지로 가득한 하루 되세요 💫",
+    "작은 친절이 세상을 바꿀 수 있어요 🤗",
+    "오늘의 도전이 내일의 성장이 됩니다 🚀",
+  ];
+
+  // 오늘 날짜 기반으로 TMI 선택
+  const today = new Date();
+  const dayOfYear = Math.floor(
+    (today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24
+  );
+  const selectedTMI = fallbackTMIs[dayOfYear % fallbackTMIs.length];
+
+  // Fallback TMI 데이터 객체 생성
+  const fallbackData = {
+    date: today.toISOString().split("T")[0],
+    content: selectedTMI,
+    is_fallback: true,
+  };
+
+  // TMI 표시
+  displayTMI(fallbackData, tmiContent, tmiDateDisplay);
+
+  // Fallback TMI도 캐시에 저장 (단, Supabase 데이터보다 우선순위 낮음)
+  const cacheKey = `tmi_fallback_${fallbackData.date}`;
+  const existingCache = getCachedTMI(`tmi_${fallbackData.date}`);
+  if (!existingCache) {
+    cacheTMI(cacheKey, fallbackData);
+  }
+
+  console.log("📝 Fallback TMI 표시:", selectedTMI);
 }
 
 // 별자리 운세 배너 초기화
