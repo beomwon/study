@@ -17,3 +17,44 @@
 - 혼자서 만들어보는 곳이라 깔끔하게 만들지 못합니다.
 - frontend는 vercel, backend는 cloudtype, database는 supabase를 이용합니다.
 - 사이트 주소: https://www.soop.run
+
+<details>
+<summary><strong>1편: 프로젝트 시작, vercel 배포, 도메인 연결, 심리 테스트 구현</strong></summary>
+
+#### 내용
+
+- 프로젝트 초기 설정 및 기본 골격 구성 (파비콘, 사이트)
+- Vercel 배포 환경 설정
+- 도메인 연결
+- 심리 테스트 구현
+
+📖 **블로그 링크**: https://blog.naver.com/coderlee_/223923250949
+
+</details>
+
+<details>
+<summary><strong>2편: 별자리운세, 애드센스, 디자인 수정</strong></summary>
+
+#### 내용
+
+- 오늘의 별자리 운세 기능 구현
+- 애드센스 심사 등록
+- 전체적인 사이트 디자인 수정
+
+📖 **블로그 링크**: https://blog.naver.com/coderlee_/223923820596
+
+</details>
+
+<details>
+<summary><strong>3편: 데이터베이스 연동과 TMI 기능</strong></summary>
+
+#### 내용
+
+- Supabase 데이터베이스 연동
+- TMI 데이터 글로벌 캐싱 구현
+- API 엔드포인트 최적화
+- cloudtype에 fastapi로 서버를 만들고 doker로 배포
+
+📖 **블로그 링크**: https://blog.naver.com/coderlee_/223924855783
+
+</details>
