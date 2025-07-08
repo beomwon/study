@@ -76,7 +76,7 @@ body {
 
 /* 캐러셀 섹션 */
 .carousel-section {
-  margin-bottom: 2rem;
+  margin: 16px 0;
 }
 
 .carousel-container {
@@ -84,7 +84,8 @@ body {
   width: 100%;
   height: 280px;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .carousel-wrapper {
@@ -455,6 +456,27 @@ body {
   content: "광고 로딩 중...";
   color: #999;
   font-size: 0.8rem;
+}
+
+/* 메인 GIF 배너 */
+.main-gif-banner {
+  margin: 16px 0;
+}
+
+.gif-content {
+  background: white;
+  border-radius: 16px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.main-gif {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
 }
 
 /* 반응형 디자인 */

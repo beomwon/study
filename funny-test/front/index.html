@@ -66,52 +66,15 @@
 
       <!-- 메인 콘텐츠 -->
       <main class="main">
-        <!-- 메인 캐러셀 -->
-        <section class="carousel-section">
-          <div class="carousel-container">
-            <div class="carousel-wrapper" id="mainCarousel">
-              <div
-                class="carousel-slide active"
-                data-test="psychology"
-                style="background-image: url('assets/images/teto.png')"
-              >
-                <div class="slide-content">
-                  <h2 class="slide-title">테토녀 vs 에겐녀</h2>
-                  <p class="slide-subtitle">당신은 어떤 타입일까요?</p>
-                </div>
-              </div>
-              <div class="carousel-slide" data-test="mbti">
-                <div class="slide-content">
-                  <h2 class="slide-title">MBTI 성격 테스트</h2>
-                  <p class="slide-subtitle">16가지 성격 유형 중 나는?</p>
-                </div>
-              </div>
-              <div class="carousel-slide" data-test="mindtest">
-                <div class="slide-content">
-                  <h2 class="slide-title">심리 테스트</h2>
-                  <p class="slide-subtitle">숨겨진 나의 심리 상태</p>
-                </div>
-              </div>
-              <div class="carousel-slide" data-test="love">
-                <div class="slide-content">
-                  <h2 class="slide-title">연애 스타일 테스트</h2>
-                  <p class="slide-subtitle">나의 연애 스타일은?</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- 캐러셀 네비게이션 -->
-            <div class="carousel-nav">
-              <button class="nav-btn prev" id="prevBtn">‹</button>
-              <button class="nav-btn next" id="nextBtn">›</button>
-            </div>
-
-            <!-- 캐러셀 인디케이터 -->
-            <div class="carousel-indicators">
-              <span class="indicator active" data-slide="0"></span>
-              <span class="indicator" data-slide="1"></span>
-              <span class="indicator" data-slide="2"></span>
-              <span class="indicator" data-slide="3"></span>
+        <!-- 메인 GIF 배너 -->
+        <section class="main-gif-banner">
+          <div class="container">
+            <div class="gif-content">
+              <img
+                src="assets/images/main.gif"
+                alt="메인 배너"
+                class="main-gif"
+              />
             </div>
           </div>
         </section>
@@ -128,6 +91,58 @@
                 <p class="tmi-text" id="tmiContent">
                   <span class="loading">재미있는 TMI를 불러오는 중...</span>
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 메인 캐러셀 -->
+        <section class="carousel-section">
+          <div class="container">
+            <div class="carousel-container">
+              <div class="carousel-wrapper" id="mainCarousel">
+                <div
+                  class="carousel-slide active"
+                  data-test="psychology"
+                  style="background-image: url('assets/images/teto.png')"
+                >
+                  <div class="slide-content">
+                    <h2 class="slide-title">테토녀 vs 에겐녀</h2>
+                    <p class="slide-subtitle">당신은 어떤 타입일까요?</p>
+                  </div>
+                </div>
+                <div class="carousel-slide" data-test="mbti">
+                  <div class="slide-content">
+                    <h2 class="slide-title">MBTI 성격 테스트</h2>
+                    <p class="slide-subtitle">16가지 성격 유형 중 나는?</p>
+                  </div>
+                </div>
+                <div class="carousel-slide" data-test="mindtest">
+                  <div class="slide-content">
+                    <h2 class="slide-title">심리 테스트</h2>
+                    <p class="slide-subtitle">숨겨진 나의 심리 상태</p>
+                  </div>
+                </div>
+                <div class="carousel-slide" data-test="love">
+                  <div class="slide-content">
+                    <h2 class="slide-title">연애 스타일 테스트</h2>
+                    <p class="slide-subtitle">나의 연애 스타일은?</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 캐러셀 네비게이션 -->
+              <div class="carousel-nav">
+                <button class="nav-btn prev" id="prevBtn">‹</button>
+                <button class="nav-btn next" id="nextBtn">›</button>
+              </div>
+
+              <!-- 캐러셀 인디케이터 -->
+              <div class="carousel-indicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+                <span class="indicator" data-slide="3"></span>
               </div>
             </div>
           </div>
@@ -157,7 +172,7 @@
         <!-- 최신 테스트 섹션 -->
         <section class="latest-tests">
           <div class="section-header">
-            <h3 class="section-title">😍 최신 심리테스트</h3>
+            <h3 class="section-title">최신 심리테스트</h3>
           </div>
 
           <div class="horizontal-scroll-container">
