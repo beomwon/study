@@ -102,7 +102,7 @@ body {
   cursor: pointer;
   background: linear-gradient(135deg, #ff6b9d, #c44569);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   background-size: cover;
   background-position: center;
@@ -124,7 +124,8 @@ body {
 .slide-content {
   text-align: center;
   color: white;
-  padding: 2rem;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
 }
 
 .slide-emoji {
@@ -136,7 +137,6 @@ body {
 .slide-title {
   font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -544,7 +544,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.2) 70%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
   z-index: 1;
 }
 
@@ -559,13 +565,16 @@ body {
 }
 
 .tmi-content {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: url("../images/night.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 16px;
   padding: 20px;
   color: white;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .tmi-header {
