@@ -36,9 +36,15 @@ function initCarousel() {
     moveToSlide(prev);
   }
 
-  // 이벤트 리스너
-  nextBtn.addEventListener("click", nextSlide);
-  prevBtn.addEventListener("click", prevSlide);
+  // 이벤트 리스너 (버튼 우선순위를 높이기 위해)
+  nextBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    nextSlide();
+  });
+  prevBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    prevSlide();
+  });
 
   // 인디케이터 클릭
   indicators.forEach((indicator, index) => {
@@ -48,14 +54,25 @@ function initCarousel() {
   // 캐러셀 슬라이드 클릭으로 테스트 시작
   const slides = document.querySelectorAll(".carousel-slide");
   slides.forEach((slide) => {
-    slide.addEventListener("click", () => {
+    slide.addEventListener("click", (e) => {
+      // 네비게이션 버튼이나 인디케이터 클릭 시에는 테스트를 시작하지 않음
+      if (
+        e.target.closest(".nav-btn") ||
+        e.target.closest(".carousel-nav") ||
+        e.target.closest(".indicator")
+      ) {
+        return;
+      }
+
       const testType = slide.dataset.test;
-      startTest(testType);
+      redirectToTestDirect(testType);
     });
   });
 
-  // 자동 슬라이드 (선택사항)
-  setInterval(nextSlide, 5000);
+  // 자동 슬라이드 (페이지 로딩 후 충분한 시간 후에 시작)
+  setTimeout(() => {
+    setInterval(nextSlide, 5000);
+  }, 3000); // 3초 후에 자동 슬라이드 시작
 }
 
 // 수평 스크롤 기능
@@ -112,7 +129,7 @@ function initHorizontalScroll() {
       if (isDown) return;
 
       const testType = item.dataset.test;
-      startTest(testType);
+      redirectToTestDirect(testType);
     });
   });
 }
@@ -142,11 +159,11 @@ function startTest(testType) {
     },
     color: {
       title: "컬러 심리 테스트",
-      description: "좋아하는 색깔로 알아보는 성격 분석!",
+      description: "색깔 선택을 통해 당신의 숨겨진 성격을 알아보세요!",
     },
     character: {
-      title: "캐릭터 테스트",
-      description: "나는 어떤 캐릭터와 닮았을까요?",
+      title: "캐릭터 심리 테스트",
+      description: "당신과 가장 닮은 캐릭터를 찾아보세요!",
     },
     fortune: {
       title: "운세 테스트",
@@ -332,21 +349,63 @@ function redirectToTest(testType) {
       case "mindtest":
         window.location.href = "tests/mind/index.html";
         break;
+      case "job":
+        window.location.href = "tests/job/index.html";
+        break;
+      case "animal":
+        window.location.href = "tests/animal/index.html";
+        break;
+      case "color":
+        window.location.href = "tests/color/index.html";
+        break;
+      case "character":
+        window.location.href = "tests/character/index.html";
+        break;
+      case "fortune":
+        window.location.href = "tests/fortune/index.html";
+        break;
       default:
-        const testNames = {
-          job: "직업 적성 테스트",
-          animal: "동물상 테스트",
-          color: "컬러 심리 테스트",
-          character: "캐릭터 테스트",
-          fortune: "운세 테스트",
-        };
-
-        alert(
-          `${testNames[testType]} 페이지를 준비하고 있습니다!\n곧 다양한 테스트를 만나보실 수 있어요! 😊`
-        );
+        alert("준비 중인 테스트입니다! 😊");
         break;
     }
   }, 300);
+}
+
+// 테스트 페이지로 바로 리다이렉트 (모달 없이)
+function redirectToTestDirect(testType) {
+  // 실제 테스트 페이지로 이동
+  switch (testType) {
+    case "psychology":
+      window.location.href = "tests/tetoto/index.html";
+      break;
+    case "mbti":
+      window.location.href = "tests/mbti/index.html";
+      break;
+    case "love":
+      window.location.href = "tests/love/index.html";
+      break;
+    case "mindtest":
+      window.location.href = "tests/mind/index.html";
+      break;
+    case "job":
+      window.location.href = "tests/job/index.html";
+      break;
+    case "animal":
+      window.location.href = "tests/animal/index.html";
+      break;
+    case "color":
+      window.location.href = "tests/color/index.html";
+      break;
+    case "character":
+      window.location.href = "tests/character/index.html";
+      break;
+    case "fortune":
+      window.location.href = "tests/fortune/index.html";
+      break;
+    default:
+      alert("준비 중인 테스트입니다! 😊");
+      break;
+  }
 }
 
 // 페이지 로드 시 초기화

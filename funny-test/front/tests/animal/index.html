@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>동물상 테스트 | SOOP</title>
+
+    <!-- 파비콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../assets/images/favicon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../../assets/images/favicon.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../../assets/images/favicon.png"
+    />
+    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+
+    <link rel="stylesheet" href="../../assets/css/styles.css" />
+    <link rel="stylesheet" href="../../assets/css/test-styles.css" />
+  </head>
+  <body>
+    <div class="app-wrapper">
+      <!-- 헤더 -->
+      <header class="header">
+        <div class="container">
+          <a href="../../index.html" class="logo">SOOP</a>
+        </div>
+      </header>
+
+      <!-- 메인 콘텐츠 -->
+      <main class="main">
+        <!-- 테스트 시작 화면 -->
+        <section class="test-intro" id="testIntro">
+          <div class="container">
+            <div class="intro-content">
+              <div class="intro-emoji">🐾</div>
+              <h1 class="intro-title">동물상 테스트</h1>
+              <h2 class="intro-subtitle">나와 닮은 동물은?</h2>
+              <p class="intro-description">
+                12개의 질문을 통해 당신의 성격과<br />
+                가장 닮은 동물을 찾아보세요!
+              </p>
+              <button class="start-btn" onclick="startTest()">
+                테스트 시작하기
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 테스트 진행 화면 -->
+        <section class="test-progress" id="testProgress" style="display: none">
+          <div class="container">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question-counter">
+              <span class="progress-text" id="progressText">1 / 12</span>
+            </div>
+
+            <div class="question-container" id="questionContainer">
+              <h3 class="question-text" id="questionTitle">
+                문제를 불러오는 중...
+              </h3>
+              <div class="answer-options" id="optionsContainer">
+                <!-- 답변 옵션들이 여기에 동적으로 추가됩니다 -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 결과 화면 -->
+        <section class="test-result" id="testResult" style="display: none">
+          <div class="container">
+            <div class="result-content">
+              <div class="result-emoji" id="resultEmoji">🐱</div>
+              <h2 class="result-title" id="resultTitle">당신의 동물상</h2>
+              <div class="result-description" id="resultDescription">
+                결과 설명이 여기에 표시됩니다.
+              </div>
+              <div class="result-actions">
+                <button class="retry-btn" onclick="retryTest()">
+                  다시 테스트하기
+                </button>
+                <button class="share-btn" onclick="shareResult()">
+                  결과 공유하기
+                </button>
+                <button class="home-btn" onclick="goHome()">홈으로</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
