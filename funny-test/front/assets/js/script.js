@@ -11,6 +11,16 @@ function initCarousel() {
   const indicators = document.querySelectorAll(".indicator");
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
+  const carouselContainer = carousel.parentElement; // 캐러셀 컨테이너
+
+  // 터치/드래그 관련 변수
+  let startX = 0;
+  let startY = 0;
+  let deltaX = 0;
+  let deltaY = 0;
+  let isDragging = false;
+  let isClickBlocked = false;
+  let autoSlideTimer;
 
   // 슬라이드 이동 함수
   function moveToSlide(slideIndex) {
@@ -36,25 +46,239 @@ function initCarousel() {
     moveToSlide(prev);
   }
 
+  // 자동 슬라이드 재시작
+  function resetAutoSlide() {
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+    }
+    autoSlideTimer = setInterval(nextSlide, 5000);
+  }
+
+  // 터치 시작 (모바일)
+  function handleTouchStart(e) {
+    const touch = e.touches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+    isDragging = false;
+    isClickBlocked = false;
+
+    // 드래그 가능 상태 표시
+    carouselContainer.classList.add("draggable");
+
+    // 자동 슬라이드 일시 정지
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+    }
+  }
+
+  // 터치 이동 (모바일)
+  function handleTouchMove(e) {
+    if (!startX || !startY) return;
+
+    const touch = e.touches[0];
+    deltaX = touch.clientX - startX;
+    deltaY = touch.clientY - startY;
+
+    // 수평 스와이프가 수직 스와이프보다 큰 경우에만 처리
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+      isDragging = true;
+      isClickBlocked = true;
+      e.preventDefault(); // 페이지 스크롤 방지
+
+      // 드래그 상태 표시
+      carouselContainer.classList.add("dragging");
+      carousel.classList.add("dragging");
+
+      // 실시간 드래그 효과 (민감도 조절: 0.4배로 줄임)
+      const currentTranslateX = -currentSlide * (100 / totalSlides);
+      const dragPercent = (deltaX / carouselContainer.offsetWidth) * 100 * 0.4; // 민감도 40%로 설정
+      carousel.style.transform = `translateX(${
+        currentTranslateX + dragPercent
+      }%)`;
+    }
+  }
+
+  // 터치 종료 (모바일)
+  function handleTouchEnd(e) {
+    // 드래그 상태 클래스 제거
+    carouselContainer.classList.remove("draggable", "dragging");
+    carousel.classList.remove("dragging");
+
+    if (!isDragging) {
+      resetAutoSlide();
+      return;
+    }
+
+    // 최소 스와이프 거리 (화면 너비의 20%로 줄임 - 더 민감하게)
+    const minSwipeDistance = carouselContainer.offsetWidth * 0.2;
+
+    if (Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // 오른쪽으로 스와이프 (이전 슬라이드)
+        prevSlide();
+      } else {
+        // 왼쪽으로 스와이프 (다음 슬라이드)
+        nextSlide();
+      }
+    } else {
+      // 스와이프 거리가 부족하면 원래 위치로 복원
+      moveToSlide(currentSlide);
+    }
+
+    // 변수 초기화
+    startX = 0;
+    startY = 0;
+    deltaX = 0;
+    deltaY = 0;
+    isDragging = false;
+
+    // 클릭 블록 해제 (약간의 지연)
+    setTimeout(() => {
+      isClickBlocked = false;
+    }, 100);
+
+    // 자동 슬라이드 재시작
+    resetAutoSlide();
+  }
+
+  // 마우스 드래그 시작 (데스크톱)
+  function handleMouseDown(e) {
+    startX = e.clientX;
+    startY = e.clientY;
+    isDragging = false;
+    isClickBlocked = false;
+
+    // 드래그 가능 상태 표시
+    carouselContainer.classList.add("draggable");
+
+    // 자동 슬라이드 일시 정지
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+    }
+
+    // 마우스 이벤트 리스너 추가
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    e.preventDefault(); // 텍스트 선택 방지
+  }
+
+  // 마우스 드래그 (데스크톱)
+  function handleMouseMove(e) {
+    if (!startX || !startY) return;
+
+    deltaX = e.clientX - startX;
+    deltaY = e.clientY - startY;
+
+    // 수평 드래그가 수직 드래그보다 큰 경우에만 처리
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+      isDragging = true;
+      isClickBlocked = true;
+
+      // 드래그 상태 표시
+      carouselContainer.classList.add("dragging");
+      carousel.classList.add("dragging");
+
+      // 실시간 드래그 효과 (민감도 조절: 0.4배로 줄임)
+      const currentTranslateX = -currentSlide * (100 / totalSlides);
+      const dragPercent = (deltaX / carouselContainer.offsetWidth) * 100 * 0.4; // 민감도 40%로 설정
+      carousel.style.transform = `translateX(${
+        currentTranslateX + dragPercent
+      }%)`;
+    }
+  }
+
+  // 마우스 드래그 종료 (데스크톱)
+  function handleMouseUp(e) {
+    // 마우스 이벤트 리스너 제거
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+
+    // 드래그 상태 클래스 제거
+    carouselContainer.classList.remove("draggable", "dragging");
+    carousel.classList.remove("dragging");
+
+    if (!isDragging) {
+      resetAutoSlide();
+      return;
+    }
+
+    // 최소 드래그 거리 (화면 너비의 20%로 줄임 - 더 민감하게)
+    const minSwipeDistance = carouselContainer.offsetWidth * 0.2;
+
+    if (Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // 오른쪽으로 드래그 (이전 슬라이드)
+        prevSlide();
+      } else {
+        // 왼쪽으로 드래그 (다음 슬라이드)
+        nextSlide();
+      }
+    } else {
+      // 드래그 거리가 부족하면 원래 위치로 복원
+      moveToSlide(currentSlide);
+    }
+
+    // 변수 초기화
+    startX = 0;
+    startY = 0;
+    deltaX = 0;
+    deltaY = 0;
+    isDragging = false;
+
+    // 클릭 블록 해제 (약간의 지연)
+    setTimeout(() => {
+      isClickBlocked = false;
+    }, 100);
+
+    // 자동 슬라이드 재시작
+    resetAutoSlide();
+  }
+
   // 이벤트 리스너 (버튼 우선순위를 높이기 위해)
   nextBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     nextSlide();
+    resetAutoSlide();
   });
   prevBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     prevSlide();
+    resetAutoSlide();
   });
 
   // 인디케이터 클릭
   indicators.forEach((indicator, index) => {
-    indicator.addEventListener("click", () => moveToSlide(index));
+    indicator.addEventListener("click", () => {
+      moveToSlide(index);
+      resetAutoSlide();
+    });
   });
+
+  // 터치 이벤트 추가 (모바일)
+  carouselContainer.addEventListener("touchstart", handleTouchStart, {
+    passive: false,
+  });
+  carouselContainer.addEventListener("touchmove", handleTouchMove, {
+    passive: false,
+  });
+  carouselContainer.addEventListener("touchend", handleTouchEnd, {
+    passive: false,
+  });
+
+  // 마우스 이벤트 추가 (데스크톱)
+  carouselContainer.addEventListener("mousedown", handleMouseDown);
 
   // 캐러셀 슬라이드 클릭으로 테스트 시작
   const slides = document.querySelectorAll(".carousel-slide");
   slides.forEach((slide) => {
     slide.addEventListener("click", (e) => {
+      // 드래그 중이거나 클릭이 블록된 경우 테스트 시작 방지
+      if (isClickBlocked || isDragging) {
+        e.preventDefault();
+        return;
+      }
+
       // 네비게이션 버튼이나 인디케이터 클릭 시에는 테스트를 시작하지 않음
       if (
         e.target.closest(".nav-btn") ||
@@ -69,9 +293,9 @@ function initCarousel() {
     });
   });
 
-  // 자동 슬라이드 (페이지 로딩 후 충분한 시간 후에 시작)
+  // 자동 슬라이드 시작 (페이지 로딩 후 충분한 시간 후에 시작)
   setTimeout(() => {
-    setInterval(nextSlide, 5000);
+    resetAutoSlide();
   }, 3000); // 3초 후에 자동 슬라이드 시작
 }
 
