@@ -259,11 +259,17 @@ body {
   flex: 0 0 150px;
   background: white;
   border-radius: 15px;
-  padding: 1rem;
+  padding: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
   border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  position: relative;
+  height: 200px;
 }
 
 .test-item:hover {
@@ -272,8 +278,18 @@ body {
 }
 
 .test-thumbnail {
-  text-align: center;
-  margin-bottom: 0.8rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .test-emoji {
@@ -282,22 +298,59 @@ body {
 }
 
 .test-info {
+  position: relative;
+  z-index: 2;
   text-align: center;
+  padding: 1rem;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  color: white;
+  margin-top: auto;
 }
 
 .test-name {
   font-size: 0.9rem;
   font-weight: bold;
   margin-bottom: 0.3rem;
-  color: #333;
   line-height: 1.3;
 }
 
 .test-desc {
   font-size: 0.8rem;
-  color: #666;
   margin-bottom: 0.5rem;
   line-height: 1.3;
+}
+
+/* 이미지 배경이 있는 모든 아이템의 텍스트 스타일 */
+.test-item[data-test="job"] .test-name,
+.test-item[data-test="animal"] .test-name,
+.test-item[data-test="color"] .test-name,
+.test-item[data-test="character"] .test-name {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.test-item[data-test="job"] .test-desc,
+.test-item[data-test="animal"] .test-desc,
+.test-item[data-test="color"] .test-desc,
+.test-item[data-test="character"] .test-desc {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* 이미지가 있는 일반 아이템들의 배경은 제거 */
+.test-item[data-test="animal"] .test-info,
+.test-item[data-test="color"] .test-info,
+.test-item[data-test="character"] .test-info {
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  color: white;
 }
 
 .test-stats {
