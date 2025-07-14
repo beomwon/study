@@ -31,6 +31,7 @@
 .modal-carousel .carousel-btn {
   opacity: 0;
   transition: opacity 0.3s ease;
+  /* color: #f97316; */
 }
 
 .modal-carousel:hover .carousel-btn {

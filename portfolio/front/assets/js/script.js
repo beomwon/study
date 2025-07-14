@@ -43,11 +43,14 @@ const themeManager = new ThemeManager();
 // 스크롤 인디케이터 관리
 function handleScrollIndicator() {
   const scrollIndicator = document.querySelector(".scroll-indicator");
+  const toggleTooltip = document.querySelector(".theme-tooltip");
   if (scrollIndicator) {
     if (window.scrollY > 50) {
       scrollIndicator.classList.add("hidden");
+      toggleTooltip.classList.add("hidden");
     } else {
       scrollIndicator.classList.remove("hidden");
+      toggleTooltip.classList.remove("hidden");
     }
   }
 }
@@ -405,7 +408,7 @@ class ModalManager {
         title: "💬 소통",
         body: `
         <div class="modal-carousel" style="position:relative; width:100%; height: 400px; margin:0 auto 1rem auto; display:flex; justify-content:center; align-items:center;">
-        <button class="carousel-btn prev" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#fff; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
+        <button class="carousel-btn prev" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#f97316; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
           <i class="fa-solid fa-angle-left"></i>
         </button>
         <div class="carousel-image-wrapper" style="width:100%; height:400px; position:relative;">
@@ -415,7 +418,7 @@ class ModalManager {
           <img class="carousel-image" src="assets/images/communication/4.png" alt="소통 이미지4" style="width:100%; height:400px; object-fit:cover; display:none; position:absolute; top:0; left:0;">
           <img class="carousel-image" src="assets/images/communication/5.png" alt="소통 이미지5" style="width:100%; height:400px; object-fit:cover; display:none; position:absolute; top:0; left:0;">
         </div>
-        <button class="carousel-btn next" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#fff; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
+        <button class="carousel-btn next" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#f97316; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
           <i class="fa-solid fa-angle-right"></i>
         </button>
         <div class="carousel-indicator" style="position:absolute; bottom:15px; width:100%; text-align:center; z-index:10;">
@@ -436,14 +439,14 @@ class ModalManager {
         title: "📚 배움",
         body: `
         <div class="modal-carousel" style="position:relative; width:100%; height: 400px; margin:0 auto 1rem auto; display:flex; justify-content:center; align-items:center;">
-        <button class="carousel-btn prev" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#fff; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
+        <button class="carousel-btn prev" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#f97316; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
           <i class="fa-solid fa-angle-left"></i>
         </button>
         <div class="carousel-image-wrapper" style="width:100%; height:400px; position:relative;">
           <img class="carousel-image" src="assets/images/learn/1.png" alt="소통 이미지1" style="width:100%; height:400px; object-fit:cover; display:block; position:absolute; top:0; left:0;">
           <img class="carousel-image" src="assets/images/learn/2.png" alt="소통 이미지2" style="width:100%; height:400px; object-fit:cover; display:none; position:absolute; top:0; left:0;">
         </div>
-        <button class="carousel-btn next" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#fff; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
+        <button class="carousel-btn next" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background: none; border:none; color:#f97316; font-size:2rem; width:36px; height:36px; z-index:10; cursor:pointer;">
           <i class="fa-solid fa-angle-right"></i>
         </button>
         <div class="carousel-indicator" style="position:absolute; bottom:15px; width:100%; text-align:center; z-index:10;">

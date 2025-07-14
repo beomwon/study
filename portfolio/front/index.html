@@ -38,7 +38,10 @@
   </head>
   <body>
     <!-- 테마 토글 버튼 -->
-    <button class="theme-toggle" id="theme-toggle">🌙</button>
+    <div class="theme-tooltip-container">
+      <div class="theme-tooltip">라이트모드와 다크모드가 있어요.</div>
+      <button class="theme-toggle" id="theme-toggle">🌙</button>
+    </div>
 
     <!-- 홈 섹션 -->
     <section id="home" class="hero">
@@ -826,7 +829,6 @@
     <section id="skills" class="skills-projects">
       <div class="container">
         <h2 class="section-title">프로젝트</h2>
-
         <!-- 스킬 필터 태그 -->
         <div class="skill-filters">
           <button class="skill-filter active" data-skill="all">
@@ -1027,7 +1029,7 @@
           </button>
         </div>
         <div class="skill-filters-description">
-          * 아이콘을 누르면 선택된 스킬의 프로젝트를 볼 수 있습니다.
+          * 아이콘을 누르면 선택된 스킬의 프로젝트를 볼 수 있어요. 그리고 프로젝트 카드를 눌러보세요.
         </div>
         <!-- 프로젝트 그리드 -->
         <div class="projects-grid" id="projects-grid">
@@ -2022,7 +2024,7 @@
               <div class="contact-item">
                 <strong>전화:</strong> 010-4870-3170
               </div>
-              <div class="contact-item"><strong>위치:</strong> 대한민국</div>
+              <div class="contact-item"><strong>위치:</strong> 대한민국이면 괜찮아요</div>
             </div>
           </div>
           <div class="contact-form">
@@ -2047,11 +2049,11 @@
     </section>
 
     <!-- 푸터 -->
-    <footer class="footer">
+    <!-- <footer class="footer">
       <div class="container">
         <p>&copy; 2025 이범원. All rights reserved.</p>
       </div>
-    </footer>
+    </footer> -->
 
     <!-- 키워드 모달창 -->
     <div id="keyword-modal" class="modal">
