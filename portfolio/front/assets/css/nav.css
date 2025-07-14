@@ -1,0 +1,78 @@
+/* 동그란 바 네비게이션 */
+.circle-nav {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 6px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.circle-nav.sticky {
+  position: fixed;
+  top: 20px;
+  bottom: auto;
+}
+
+/* 다크모드에서의 네비바 기본 스타일 */
+[data-theme="dark"] .circle-nav {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
+
+/* 라이트모드에서의 네비바 기본 스타일 */
+[data-theme="light"] .circle-nav {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 다크모드에서의 sticky 스타일 */
+[data-theme="dark"] .circle-nav.sticky {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* 라이트모드에서의 sticky 스타일 */
+[data-theme="light"] .circle-nav.sticky {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.nav-circle {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-item-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-item-text.active {
+  color: #f97316;
+  font-weight: 600;
+}
+
+.nav-circle:hover .nav-item-text {
+  color: #f97316;
+}

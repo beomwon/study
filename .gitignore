@@ -1,3 +1,4 @@
 .study
 .env
 docker/.env
+portfolio/front/.env

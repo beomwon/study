@@ -1,0 +1,308 @@
+/* badge */
+.badge {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  color: #333;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* 각 서비스별 아이콘 지정 */
+.badge.home::before {
+  content: "\f015"; /* fa-home */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+.badge.github::before {
+  content: "\f09b"; /* fa-github */
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+}
+
+.badge.googleplay::before {
+  content: "\f3ab"; /* fa-google-play */
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+}
+
+.badge.external::before {
+  content: "\f08e"; /* fa-arrow-up-right-from-square */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+.project-tag {
+  display: inline-block;
+  padding: 0.3rem 0.2rem;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1;
+}
+.sideproject {
+  background-color: #5c766a;
+}
+
+.office {
+  background-color: #4c5b91; /* blue-600 */
+}
+
+.bootcamp {
+  background-color: #7d5a88; /* green-600 */
+}
+
+/* Skills & Projects 통합 섹션 */
+.skills-projects {
+  padding: 6rem 0;
+  background: var(--bg-primary);
+}
+
+/* 스킬 필터 태그 */
+.skill-filters {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 0rem;
+  /* overflow-x: auto;
+  padding: 2.2rem 0; */
+  /* margin-bottom: 2.1rem; */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+.skill-filters-description {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.skill-filters::-webkit-scrollbar {
+  height: 6px;
+}
+
+.skill-filters::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.skill-filters::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.skill-filters::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+.skill-filter {
+  background: none;
+  /* color: var(--text-primary); */
+  border: none;
+  /* padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500; */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  transition: all 0.3s ease;
+  margin-top: 2.2rem;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border-radius: 4px;
+  /* overflow: hidden; */
+  box-shadow: 0 5px 15px var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  border: 1px solid var(--border-color);
+  opacity: 1;
+  height: 290px;
+  min-width: 358px;
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  word-break: keep-all;
+}
+
+.project-card.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px var(--shadow);
+}
+
+.project-card.modal-card:hover {
+  transform: translateY(0px);
+  cursor: default;
+}
+
+.project-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  justify-content: space-between;
+}
+
+.project-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  align-items: center;
+}
+
+.project-description {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  flex-grow: 1;
+  max-height: 7.5em;
+  /* overflow: hidden; */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  font-size: 0.9rem;
+}
+
+.last .project-description {
+  margin-bottom: 0;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.3rem;
+  /* margin-bottom: 1rem; */
+  /* padding-bottom: 1rem; */
+  /* border-bottom: 1px solid var(--border-color); */
+}
+
+.project-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  /* padding: 0.3rem 0.6rem; */
+  /* border: 1px solid var(--accent-color); */
+  /* border-radius: 8px; */
+  font-size: 0.85rem;
+}
+
+.project-link:hover {
+  font-weight: 600;
+}
+
+.project-tech {
+  display: flex;
+  gap: 0.6rem;
+  /* overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent; */
+  /* padding: 0.5rem 0;
+  margin-top: 0.5rem; */
+  margin-top: 0.5rem;
+}
+
+.project-tech::-webkit-scrollbar {
+  height: 4px;
+}
+
+.project-tech::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-tech::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+.project-tech::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* 추가 설명 영역 */
+.extra-content {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--accent-color);
+}
+
+/* 테이블 정렬 */
+.extra-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.extra-content th,
+.extra-content td {
+  border: 1px solid var(--border-color);
+  padding: 0.6rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+/* 리스트 스타일 */
+.extra-content ul {
+  padding-left: 0; /* 왼쪽 여백 제거 */
+  margin: 0;
+  list-style: none; /* 기본 점 제거 */
+  margin-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.extra-content li {
+  position: relative;
+  padding-left: 1rem; /* 체크표시와 텍스트 간 간격 */
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.extra-content li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+/* 이미지 반응형 */
+.extra-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 간격 */
+.extra-content h3 {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 2rem;
+  margin-bottom: 0.5rem;
+}

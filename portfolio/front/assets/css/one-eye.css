@@ -1,0 +1,401 @@
+/* 툴팁 내용 스타일 개선 */
+.skill-tooltip-title {
+  text-align: right;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-bottom: 0.2em;
+  color: #f97316;
+}
+.skill-tooltip-info {
+  color: #eee;
+  font-size: 0.93em;
+  margin-bottom: 0.1em;
+  text-align: left;
+  word-break: keep-all;
+}
+/* skill-item 툴팁 및 숙련도 바 */
+.skill-tooltip {
+  position: absolute;
+  left: 50%;
+  top: 110%;
+  transform: translateX(-50%);
+  background: #222;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  z-index: 99999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.skill-item:hover .skill-tooltip {
+  opacity: 1;
+}
+
+.skill-selector > div {
+  padding: 0.5rem 1.2rem;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+/* skill-selector active 메뉴 스타일 */
+.skill-selector .active {
+  color: #f97316;
+}
+
+/* skill-item blur 처리 */
+.skill-item.blur {
+  filter: blur(4px);
+  opacity: 0.1;
+  pointer-events: none;
+  transition: filter 0.2s, opacity 0.2s;
+}
+/* Summary 섹션 */
+.summary {
+  padding: 6rem 0;
+  background: var(--bg-secondary);
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+}
+
+.summary-text {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-align: center;
+  line-height: 1.4;
+  position: relative;
+}
+
+.summary-text p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.summary-text::after {
+  content: "*로 표시된 단어를 클릭해보세요.";
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.highlight-keyword {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-primary);
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-keyword-none-clickable {
+  font-weight: 600;
+  color: var(--text-primary);
+  position: relative;
+  display: inline-block;
+}
+
+.keyword-star {
+  position: absolute;
+  top: -0.6em;
+  right: -0.2em;
+  font-size: 1em;
+  color: #f97316;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.highlight-keyword:hover {
+  color: #f97316;
+}
+
+.highlight-keyword-none-clickable:hover {
+  color: #f97316;
+}
+
+/* 기본: 줄바꿈 안 함 */
+.line-break {
+  display: inline;
+}
+
+/* 화면이 802px 미만일 때 줄바꿈 */
+@media (max-width: 801px) {
+  .collaboration-break,
+  .persistence-break {
+    display: block;
+    height: 0;
+    margin-top: 4px;
+  }
+}
+
+.skill-item {
+  width: 50px; /* 원하는 크기로 조정 */
+  height: 50px;
+  background-size: 90%; /* 아이콘 크기를 줄여 여백 추가 */
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  border-radius: 6px; /* 네모박스 모서리 둥글게 */
+  background-color: white;
+  position: relative;
+  /* z-index: 1; */
+}
+
+.skills {
+  padding: 6rem 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* 위에서부터 차례대로 위치*/
+  justify-content: center;
+  align-items: center;
+}
+
+.skill-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 800px;
+  margin: 2rem 0;
+  border-radius: 2rem;
+  background-color: var(--bg-secondary);
+  box-shadow: 0 2px 4px var(--shadow);
+  cursor: pointer;
+  font-weight: 450;
+}
+
+/* skill-item을 5개씩 한 줄에 배치 */
+.skill-icons {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0.3rem;
+  justify-items: center;
+  overflow: visible;
+}
+
+@media (max-width: 680px) {
+  .skill-icons {
+    grid-template-columns: repeat(5, 1fr); /* 작은 화면에서는 5개씩 */
+  }
+}
+
+/* 자동 생성된 아이콘 클래스 */
+.skill-item.ai-learn {
+  background-image: url("../images/icons/ai-learn.svg");
+}
+.skill-item.bigquery {
+  background-image: url("../images/icons/bigquery.svg");
+}
+.skill-item.api {
+  background-image: url("../images/icons/api.svg");
+}
+.skill-item.aws {
+  background-image: url("../images/icons/aws.svg");
+}
+.skill-item.css3 {
+  background-image: url("../images/icons/css3.svg");
+}
+.skill-item.django {
+  background-image: url("../images/icons/django.svg");
+}
+.skill-item.docker {
+  background-image: url("../images/icons/docker.svg");
+}
+.skill-item.fastapi {
+  background-image: url("../images/icons/fastapi.svg");
+}
+.skill-item.figma {
+  background-image: url("../images/icons/figma.svg");
+}
+.skill-item.firebase {
+  background-image: url("../images/icons/firebase.svg");
+}
+.skill-item.flask {
+  background-image: url("../images/icons/flask.svg");
+}
+.skill-item.github {
+  background-image: url("../images/icons/github.svg");
+}
+.skill-item.html5 {
+  background-image: url("../images/icons/html5.svg");
+}
+.skill-item.huggingface {
+  background-image: url("../images/icons/huggingface.png");
+}
+.skill-item.js {
+  background-image: url("../images/icons/js.svg");
+}
+.skill-item.mysql {
+  background-image: url("../images/icons/mysql.svg");
+}
+.skill-item.notion {
+  background-image: url("../images/icons/notion.svg");
+}
+.skill-item.openai {
+  background-image: url("../images/icons/openai.svg");
+}
+.skill-item.python {
+  background-image: url("../images/icons/python.svg");
+}
+.skill-item.pytorch {
+  background-image: url("../images/icons/pytorch.svg");
+}
+.skill-item.redis {
+  background-image: url("../images/icons/redis.svg");
+}
+.skill-item.vercel {
+  background-image: url("../images/icons/vercel.svg");
+}
+
+.timeline {
+  max-width: 800px;
+  margin: 5rem auto;
+  padding: 0 1.5rem;
+  font-family: "Pretendard", sans-serif;
+  color: #e5e7eb;
+}
+.timeline h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  color: var(--accent-color);
+}
+
+.experience-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 각 아이템은 왼쪽 정렬 */
+  max-width: 610px;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.experience-item {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  align-items: flex-start;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.experience-date {
+  min-width: 100px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.experience-date::before {
+  /* dot 표시 */
+  content: "•";
+  position: absolute;
+  left: 0.3rem;
+  top: 2px;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.experience-date.now {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.experience-details {
+  width: 100%;
+}
+.experience-details h3 {
+  font-size: 1.1rem;
+  color: var(--accent-color);
+  margin: 0;
+}
+.experience-details p {
+  margin: 0.3rem 0 0.3rem;
+  line-height: 1;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+.view-detail {
+  font-size: 0.9rem;
+  color: #fc822c;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  font-weight: 400;
+}
+.view-detail:hover {
+  font-weight: 500;
+}
+.detail-content {
+  display: none;
+  background-color: var(--card-bg);
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+.detail-content ul {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+.detail-content li {
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.detail-content .sub-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.detail-content ul {
+  padding-left: 0; /* 왼쪽 여백 제거 */
+  margin: 0;
+  list-style: none; /* 기본 점 제거 */
+}
+
+.detail-content li {
+  position: relative;
+  padding-left: 1.5rem; /* 체크표시와 텍스트 간 간격 */
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.detail-content li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  color: #fc822c; /* 초록 체크 */
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+@media (max-width: 580px) {
+  .experience-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .experience-date {
+    order: -1;
+  }
+  .experience-details h3 {
+    margin-top: 0;
+  }
+}
