@@ -169,6 +169,7 @@
   justify-content: center;
   max-width: 800px;
   margin: 2rem 0;
+  border: 1px solid var(--border-color);
   border-radius: 2rem;
   background-color: var(--bg-secondary);
   box-shadow: 0 2px 4px var(--shadow);

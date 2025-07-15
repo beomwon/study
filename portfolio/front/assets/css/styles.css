@@ -42,66 +42,6 @@
   }
 }
 
-/* Contact 섹션 */
-.contact {
-  padding: 6rem 0;
-  background: var(--bg-primary);
-}
-
-.contact-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-}
-
-.contact-info h3,
-.contact-form h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-}
-
-.contact-info p {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  color: var(--text-secondary);
-}
-
-.contact-item strong {
-  width: 80px;
-  color: var(--text-primary);
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid var(--border-color);
-  border-radius: 5px;
-  font-family: inherit;
-  transition: border-color 0.3s ease;
-  background: var(--card-bg);
-  color: var(--text-primary);
-  resize: none;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--accent-color);
-}
-
 /* Footer */
 .footer {
   background: var(--accent-color);
@@ -539,7 +479,7 @@
   color: var(--card-bg);
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   font-size: 0.95rem;
   white-space: nowrap;
   z-index: 10;
@@ -547,7 +487,7 @@
 }
 
 .theme-tooltip::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 200px;
@@ -555,7 +495,7 @@
   border-width: 8px;
   border-style: solid;
   border-color: var(--accent-color) transparent transparent transparent;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.05));
 }
 
 .theme-tooltip.hidden {
