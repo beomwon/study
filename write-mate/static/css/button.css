@@ -1,0 +1,46 @@
+/* 버튼 및 버튼 관련 스타일 분리 */
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons button {
+  margin: 1px 0;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  background: var(--color-primary);
+  color: var(--color-button-text);
+  font-size: 11px;
+  font-weight: 500;
+  box-shadow: var(--color-shadow-btn);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+.buttons button:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px) scale(1.01);
+}
+
+.button-group-left {
+  display: flex;
+  gap: 3px;
+}
+
+.button-group-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 600px) {
+  .buttons button {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+}

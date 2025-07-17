@@ -2,3 +2,4 @@
 .env
 docker/.env
 portfolio/front/.env
+__pycache__

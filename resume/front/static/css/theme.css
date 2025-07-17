@@ -1,0 +1,13 @@
+.theme-toggle {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-primary-hover);
+  color: var(--color-button-text);
+  cursor: pointer;
+  transition: background 0.3s;
+}

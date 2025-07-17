@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>글메이트</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggleBtn" aria-label="테마 토글">
+      🌙
+    </button>
+    <header>
+      <h1>글메이트</h1>
+      <p>당신의 글쓰기 도우미</p>
+    </header>
+    <div class="container">
+      <div class="input-section">
+        <textarea
+          id="input-text"
+          placeholder="여기에 글을 입력하세요. 짧으면 AI가 제대로 분석 못할 수 있어요."
+        ></textarea>
+        <div class="buttons">
+          <div class="button-group-left">
+            <button onclick="spellCheck()">맞춤법 검사</button>
+            <!-- <button onclick="suggestSynonyms()">유사어 추천</button>
+            <button onclick="analyzeLength()">문장 길이 분석</button>
+            <button onclick="improveStyle()">표현력 강화</button> -->
+            <button onclick="detectAI()">GPT 판별</button>
+          </div>
+          <div class="button-group-right">
+            <span id="charCountResult"></span>
+            <button onclick="countChars()">글자 수 세기</button>
+          </div>
+        </div>
+      </div>
+      <div class="output-section">
+        <div id="output-area">분석 결과가 여기에 표시됩니다.</div>
+      </div>
+    </div>
+
+    <script type="module" src="/static/script.js"></script>
+  </body>
+</html>

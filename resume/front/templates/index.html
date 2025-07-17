@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이력서 업로드</title>
+    <!-- <link rel="stylesheet" href="front/static/css/styles.css" /> -->
+    <link rel="stylesheet" href="../static/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="테마 변경"
+        ></button>
+      </header>
+      <main>
+        <h1 class="title">이력서 업로드</h1>
+        <h2 class="subtitle">간편하게 이력서를 제출하고 시작하세요</h2>
+        <div class="file-upload" id="file-upload">
+          <input
+            type="file"
+            id="resume-input"
+            class="file-input"
+            accept=".pdf,.doc,.docx"
+          />
+          <label for="resume-input" class="file-label"
+            >이력서 파일을 드래그하거나 클릭하여 업로드</label
+          >
+          <div class="file-preview" id="file-preview"></div>
+        </div>
+        <button class="start-btn" id="start-btn">시작하기</button>
+      </main>
+    </div>
+
+    <!-- <script src="front/static/js/theme.js"></script>
+    <script src="front/static/js/file-upload.js"></script>
+    <script src="front/static/js/button.js"></script> -->
+    <script src="../static/js/theme.js"></script>
+    <script src="../static/js/file-upload.js"></script>
+    <script src="../static/js/button.js"></script>
+  </body>
+</html>
