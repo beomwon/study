@@ -1,29 +1,50 @@
-import { getOrCreateUserId } from "./utils.js";
+document.addEventListener("DOMContentLoaded", function () {
+  const startBtn = document.getElementById("start-btn");
+  if (!startBtn) return;
 
-const startBtn = document.getElementById("start-btn");
-startBtn.addEventListener("click", () => {
-  if (!document.getElementById("resume-input").files.length) {
-    alert("이력서 파일을 업로드해주세요.");
-    return;
-  }
+  startBtn.addEventListener("click", () => {
+    const resumeConsent = document.getElementById("resume-consent").checked;
+    const cameraConsent = document.getElementById("camera-consent").checked;
 
-  const formData = new FormData();
-  formData.append("resume", document.getElementById("resume-input").files[0]);
-
-  const userId = getOrCreateUserId(); // ← 추가
-  formData.append("anonymous_id", userId); // ← 백엔드에 보냄
-
-  fetch("/api/start-test", {
-    method: "POST",
-    body: formData,
-    headers: {
-      "X-Requested-With": "XMLHttpRequest",
-    },
-  }).then((response) => {
-    if (response.ok) {
-      window.location.href = "/test";
-    } else {
-      alert("업로드 실패");
+    if (!resumeConsent || !cameraConsent) {
+      alert("모든 약관에 동의하셔야 시작할 수 있습니다.");
+      return;
     }
+
+    const resumeInput = document.getElementById("resume-input");
+    if (!resumeInput.files.length) {
+      alert("이력서 파일을 업로드해주세요.");
+      return;
+    }
+
+    // getOrCreateUserId가 전역 함수로 정의되어 있다고 가정
+    let userId = localStorage.getItem("anonymous_user_id");
+    if (!userId) {
+      userId = crypto.randomUUID(); // 브라우저에서 UUID 생성
+      localStorage.setItem("anonymous_user_id", userId);
+    }
+
+    // 서버에 데이터 전송
+    const formData = new FormData();
+    formData.append("resume", resumeInput.files[0]);
+    formData.append("resume_consent", resumeConsent);
+    formData.append("camera_consent", cameraConsent);
+    formData.append("anonymous_id", userId);
+
+    fetch("/api/start-test", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.status) {
+          window.location.href = "/page/test";
+        } else {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        alert("서버와 통신 중 오류가 발생했습니다.");
+      });
   });
 });

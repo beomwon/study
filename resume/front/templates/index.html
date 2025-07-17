@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>이력서 업로드</title>
-    <!-- <link rel="stylesheet" href="front/static/css/styles.css" /> -->
-    <link rel="stylesheet" href="../static/css/styles.css" />
+    <title>AI면접피드백</title>
+    <link rel="stylesheet" href="front/static/css/styles.css" />
+    <!-- <link rel="stylesheet" href="../static/css/styles.css" /> -->
   </head>
   <body>
     <div class="container">
@@ -17,8 +17,8 @@
         ></button>
       </header>
       <main>
-        <h1 class="title">이력서 업로드</h1>
-        <h2 class="subtitle">간편하게 이력서를 제출하고 시작하세요</h2>
+        <h1 class="title">AI 면접 피드백</h1>
+        <h2 class="subtitle">포트폴리오로 만들었으니 재미로 사용해보세요.</h2>
         <div class="file-upload" id="file-upload">
           <input
             type="file"
@@ -32,14 +32,27 @@
           <div class="file-preview" id="file-preview"></div>
         </div>
         <button class="start-btn" id="start-btn">시작하기</button>
+        <div class="consent-section">
+          <label class="consent-item">
+            <input type="checkbox" id="resume-consent" />
+            [필수] 이력서 저장 및 분석을 위한 개인정보 처리에 동의합니다.
+          </label>
+          <label class="consent-item">
+            <input type="checkbox" id="camera-consent" />
+            [필수] 웹캠을 이용한 시선 추적 기능 사용에 동의합니다.
+            <span class="camera-note">
+              * 웹캠의 영상은 저장하지 않으며, 오직 실시간으로만 사용됩니다.
+            </span>
+          </label>
+        </div>
       </main>
     </div>
 
-    <!-- <script src="front/static/js/theme.js"></script>
+    <script src="front/static/js/theme.js"></script>
     <script src="front/static/js/file-upload.js"></script>
-    <script src="front/static/js/button.js"></script> -->
-    <script src="../static/js/theme.js"></script>
+    <script src="front/static/js/button.js"></script>
+    <!-- <script src="../static/js/theme.js"></script>
     <script src="../static/js/file-upload.js"></script>
-    <script src="../static/js/button.js"></script>
+    <script src="../static/js/button.js"></script> -->
   </body>
 </html>

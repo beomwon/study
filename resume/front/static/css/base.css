@@ -63,9 +63,15 @@ body {
   color: var(--color-text);
 }
 
+header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 main {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;

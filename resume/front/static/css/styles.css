@@ -1,10 +1,12 @@
 /* @import url("../static/css/theme.css");
 @import url("../static/css/button.css");
-@import url("../static/css/base.css"); */
+@import url("../static/css/base.css");
+@import url("../static/css/main.css"); */
 
 @import url("theme.css");
 @import url("button.css");
 @import url("base.css");
+@import url("main.css");
 
 .container {
   min-height: 100vh;
@@ -13,59 +15,16 @@
   align-items: center;
   justify-content: center;
 }
-header {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
 
-.title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 0.3rem;
-  text-align: center;
+/* 반응형 레이아웃 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    /* min-height: unset; */
+  }
 }
-.subtitle {
-  font-size: 1rem;
-  color: var(--color-primary-light);
-  margin-bottom: 1rem;
-  text-align: center;
-}
-.file-upload {
-  width: 100%;
-  border: 2px dashed var(--color-border);
-  border-radius: 10px;
-  padding: 2rem 1rem;
-  text-align: center;
-  background: var(--color-section-bg);
-  transition: border-color 0.3s;
-  margin-bottom: 1rem;
-}
-.file-upload.dragover {
-  border-color: var(--color-primary-hover);
-  background: rgba(0, 123, 255, 0.05); /* 필요시 변수화 가능 */
-}
-.file-input {
-  display: none;
-}
-.file-label {
-  display: block;
-  cursor: pointer;
-  color: var(--color-primary-hover);
-  font-weight: 500;
-}
-.file-preview {
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--color-text);
-}
-body[data-theme="dark"] .file-upload {
-  background: var(--color-section-bg);
-  border-color: var(--color-border);
-}
-body[data-theme="dark"] .file-label {
-  color: var(--color-primary-hover);
-}
-body[data-theme="dark"] .file-preview {
-  color: var(--color-text);
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
 }
