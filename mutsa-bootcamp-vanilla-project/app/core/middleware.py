@@ -5,9 +5,6 @@ from jose import jwt, JWTError
 from config.settings import settings
 import time
 
-
-
-
 def is_allowed_ip(client_ip: str) -> bool:
     allowed_ips = settings.ALLOWED_IPS
     # dev 환경(빈 리스트)이면 모두 허용
