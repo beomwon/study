@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // getOrCreateUserId가 전역 함수로 정의되어 있다고 가정
+    // 익명 사용자 ID 생성
+    // 로컬 스토리지에서 ID를 가져오거나 없으면 새로 생성
     let userId = localStorage.getItem("anonymous_user_id");
     if (!userId) {
       userId = crypto.randomUUID(); // 브라우저에서 UUID 생성
