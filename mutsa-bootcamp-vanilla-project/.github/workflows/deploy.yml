@@ -16,9 +16,14 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Create .env file from GitHub secret
+      - name: Create .env file from GitHub secrets
         run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "ALGORITHM=${{ secrets.ALGORITHM }}" >> .env
+          echo "ACCESS_TOKEN_EXPIRE_MINUTES=${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}" >> .env
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
+          echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> .env
+          echo "ALLOWED_IPS=${{ secrets.ALLOWED_IPS }}" >> .env
 
       - name: Build Docker image
         run: docker build -t myfastapi-app .
