@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+  overflow: hidden;
+}
+
+.practice-container {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+
+  max-width: 420px;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 1em 1em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.089);
+  box-shadow: 0 4px 4px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  color: #fff;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.practice-title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: right;
+  letter-spacing: 0.02em;
+  font-family: "Libre Bodoni", serif;
+  font-optical-sizing: auto;
+  color: #e0d7ff;
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  align-self: flex-end;
+}
+
+.practice-desc {
+  font-size: 1em;
+  color: #ffffff;
+  margin-bottom: 2em;
+  text-align: center;
+  font-weight: 400;
+  font-family: "Figtree", sans-serif;
+}
+
+.practice-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.file-upload-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.file-label {
+  font-size: 1em;
+  color: #ffffff;
+  font-weight: 400;
+  text-align: left;
+  align-self: flex-start;
+}
+
+input[type="file"] {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #fff;
+  padding: 0.6em 1em;
+  font-size: 1em;
+  outline: none;
+  transition: border 0.2s;
+}
+input[type="file"]:focus {
+  border: 1.5px solid #a084ff;
+}
+
+.glass-btn {
+  padding: 0.8em 2.2em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.32);
+  color: #e0d7ff;
+  box-shadow: 0 6px 40px 0 rgba(31, 38, 135, 0.28);
+}
+
+.submit-btn {
+  margin-top: 1.5em;
+  width: 100%;
+}
+
+.dropzone {
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.308);
+  padding: 1.2em 1em;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 0.5em;
+  position: relative;
+}
+.dropzone.dragover {
+  border-color: #fff;
+  background: rgba(160, 132, 255, 0.18);
+}
+
+.dropzone-text {
+  color: #ffffff;
+  font-size: 0.9em;
+  pointer-events: none;
+  font-weight: 400;
+}

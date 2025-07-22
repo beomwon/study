@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice | AIerview</title>
+    <link rel="stylesheet" href="/front/static/css/practice/file-upload.css" />
+  </head>
+  <body>
+    <canvas id="orb-canvas"></canvas>
+    <div class="practice-container">
+      <h1 class="practice-title">AIerview</h1>
+      <form class="practice-form">
+        <div class="file-upload-group">
+          <label class="file-label">구인공고 PDF (선택)</label>
+          <div class="dropzone" id="job-dropzone">
+            <span class="dropzone-text"
+              >여기에 파일을 끌어다 놓거나 클릭하세요</span
+            >
+            <input type="file" id="job-pdf" accept="application/pdf" hidden />
+          </div>
+        </div>
+        <div class="file-upload-group">
+          <label class="file-label">이력서 PDF (필수)</label>
+          <div class="dropzone" id="resume-dropzone">
+            <span class="dropzone-text"
+              >여기에 파일을 끌어다 놓거나 클릭하세요</span
+            >
+            <input
+              type="file"
+              id="resume-pdf"
+              accept="application/pdf"
+              hidden
+            />
+          </div>
+        </div>
+        <button type="submit" class="glass-btn submit-btn">제출하기</button>
+      </form>
+    </div>
+    <script
+      type="module"
+      src="/front/static/js/practice/file-upload.js"
+    ></script>
+    <script type="module" src="/front/static/js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #000; /* fallback */
+  overflow: hidden;
+}
+
+h1 {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 45%;
+  font-size: 2em;
+
+  font-family: "Libre Bodoni", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.glass-btn-row {
+  position: absolute;
+  top: calc(50% + 60px);
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  gap: 24px;
+  z-index: 2;
+}
+
+.glass-btn {
+  padding: 0.4em 1em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.089);
+  box-shadow: 0 4px 4px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  color: #fff;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  outline: none;
+
+  font-family: "Figtree", sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+  font-optical-sizing: auto;
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.32);
+  color: #ffffff;
+  box-shadow: 0 6px 40px 0 rgba(31, 38, 135, 0.28);
+}
+
+/* 웹 사이즈일땐 mobile 클래스를 안보이게, 모바일 사이즈일땐 web 클래스를 안보이게 */
+@media (max-width: 768px) {
+  .web {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile {
+    display: none;
+  }
+}

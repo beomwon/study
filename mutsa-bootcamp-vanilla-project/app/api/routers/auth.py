@@ -6,7 +6,6 @@ from app.api.services import auth as auth_service
 
 router = APIRouter()
 
-
 class SignUpRequest(BaseModel):
     email: str
     password: str

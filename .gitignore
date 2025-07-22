@@ -4,3 +4,5 @@ docker/.env
 portfolio/front/.env
 __pycache__
 .env.*
+.secrets
+.secrets.*
