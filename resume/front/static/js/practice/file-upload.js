@@ -50,10 +50,34 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!resumeInput.files[0]) {
-      alert("이력서 PDF는 첨부해 주세요.");
+      alert("이력서 PDF를 첨부해 주세요.");
       return;
     }
-    // 실제 업로드 로직은 서버 연동 필요
-    alert("파일이 성공적으로 첨부되었습니다! (실제 업로드는 구현 필요)");
+    const formData = new FormData();
+    if (jobInput.files[0]) {
+      formData.append("job_pdf", jobInput.files[0]);
+    }
+    formData.append("resume_pdf", resumeInput.files[0]);
+
+    fetch("/practice/send-file", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // gcs_urls 전체
+        const gcsUrls = data.gcs_urls;
+        // 파일별 url
+        const resumeUrl = data.files.resume;
+        const companyUrl = data.files.company;
+
+        // 예시 출력
+        console.log("이력서 URL:", resumeUrl);
+        console.log("회사(구인공고) URL:", companyUrl);
+        console.log("전체 gcs_urls:", gcsUrls);
+      })
+      .catch((err) => {
+        alert("업로드 실패: " + err.message);
+      });
   });
 });

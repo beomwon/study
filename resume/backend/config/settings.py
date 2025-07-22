@@ -1,6 +1,10 @@
-import dotenv, os
+import dotenv, os, json
 
 dotenv.load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+with open(GOOGLE_APPLICATION_CREDENTIALS, "r") as f:
+    GOOGLE_APPLICATION_CREDENTIALS_JSON = json.load(f)
