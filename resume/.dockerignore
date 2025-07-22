@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+.vscode/
+.git/
+node_modules/
+front/node_modules/
+front/package-lock.json
+.DS_Store
+*.log
