@@ -6,6 +6,8 @@ import uvicorn
 
 from backend.routers import practice
 
+# cors설정으로 interview페이지는 코드 입력 후에만 접근 가능
+
 app = FastAPI()
 app.mount("/front/static", StaticFiles(directory="front/static"), name="static")
 templates = Jinja2Templates(directory="front/templates")
@@ -18,5 +20,5 @@ async def home(request: Request):
 app.include_router(practice.router, prefix="/practice")
 
 # 개발용 서버 실행 코드
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
