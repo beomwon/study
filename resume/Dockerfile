@@ -7,7 +7,7 @@ FROM node:20-slim AS node-base
 # 1. Node.js 의존성 설치 단계
 FROM node-base AS node-deps
 WORKDIR /app/front
-COPY front/package.json ./
+COPY package.json ./
 RUN npm install --production
 
 # 2. Python 의존성 설치 단계
