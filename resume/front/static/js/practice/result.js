@@ -1,32 +1,110 @@
 // result.js: 결과 페이지 동작
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 백엔드에서 전달받은 데이터가 window.resultData에 있다고 가정
-  const result = window.resultData || {};
-  const container = document.getElementById("result-content");
+  // 데이터 읽기
+  const questions = [
+    localStorage.getItem("q1"),
+    localStorage.getItem("q2"),
+    localStorage.getItem("q3"),
+    localStorage.getItem("q4"),
+  ];
+  const aiAnswers = [
+    localStorage.getItem("a1"),
+    localStorage.getItem("a2"),
+    localStorage.getItem("a3"),
+    localStorage.getItem("a4"),
+  ];
+  const userAnswers = [
+    localStorage.getItem("ua1"),
+    localStorage.getItem("ua2"),
+    localStorage.getItem("ua3"),
+    localStorage.getItem("ua4"),
+  ];
+  const feedbacks = [
+    localStorage.getItem("feedback1"),
+    localStorage.getItem("feedback2"),
+    localStorage.getItem("feedback3"),
+    localStorage.getItem("feedback4"),
+  ];
+  const strengths = JSON.parse(localStorage.getItem("strengths") || "[]");
+  const weaknesses = JSON.parse(localStorage.getItem("weaknesses") || "[]");
+  const resumeFeedback = localStorage.getItem("feedback") || "";
 
-  if (!result || !result.questions) {
-    container.innerHTML = "<p>결과 데이터를 불러올 수 없습니다.</p>";
-    return;
-  }
+  // 이력서 피드백
+  document.getElementById("resume-feedback").textContent = resumeFeedback;
 
-  let html = "";
-  if (result.jobInfo) {
-    html += `<h2>구인공고 분석</h2><p>${result.jobInfo}</p>`;
-  }
-  html += `<h2>이력서 분석</h2><p>${result.resumeInfo}</p>`;
-  html += "<h2>면접 질문 및 답변</h2><ol>";
-  result.questions.forEach((q, i) => {
-    html += `<li><strong>Q${i + 1}. ${q.question}</strong><br><span>A: ${
-      q.answer
-    }</span></li>`;
+  // 강점
+  const strengthsList = document.getElementById("strengths-list");
+  strengthsList.innerHTML = "";
+  strengths.forEach((s) => {
+    const li = document.createElement("li");
+    li.textContent = s;
+    strengthsList.appendChild(li);
   });
-  html += "</ol>";
-  html += `<h2>이력서 평가</h2><p>${result.evaluation}</p>`;
 
-  container.innerHTML = html;
+  // 약점
+  const weaknessesList = document.getElementById("weaknesses-list");
+  weaknessesList.innerHTML = "";
+  weaknesses.forEach((w) => {
+    const li = document.createElement("li");
+    li.textContent = w;
+    weaknessesList.appendChild(li);
+  });
+
+  // 면접 질문 및 답변
+  const interviewList = document.getElementById("interview-list");
+  interviewList.innerHTML = "";
+  questions.forEach((q, i) => {
+    if (!q) return;
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${q}</span><br/>
+      <span><b>내 답변</b><br/> ${userAnswers[i] || ""}</span><br/>
+      <span><b>답변에 대한 피드백</b><br/> ${feedbacks[i] || ""}</span><br/>
+      <span><b>참고할만한 AI 답변</b><br/> ${aiAnswers[i] || ""}</span><br/>
+      `;
+    interviewList.appendChild(li);
+  });
 
   document.getElementById("back-btn").onclick = () => {
-    window.location.href = "/practice/file-upload";
+    window.location.href = "/";
   };
+
+  // PDF 저장 버튼
+  const saveBtn = document.getElementById("save-pdf-btn");
+  if (saveBtn) {
+    saveBtn.onclick = function () {
+      const element = document.getElementById("result-content");
+      // 임시 div 생성 및 innerHTML 복사, PDF용 스타일 추가
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = `
+        <style>
+          ul, ol { margin-bottom: 16px; }
+          li { margin-bottom: 8px; }
+          h2 { margin-top: 24px; margin-bottom: 12px; }
+          p { margin-bottom: 12px; }
+          span { line-height: 1.5; }
+        </style>
+        ${element.innerHTML}
+      `;
+      tempDiv.style.color = "#000";
+      tempDiv.style.padding = "20px";
+      tempDiv.style.background = "#fff";
+      tempDiv.style.width = "100%";
+      tempDiv.style.boxSizing = "border-box";
+      document.body.appendChild(tempDiv);
+      html2pdf()
+        .set({
+          margin: 10,
+          filename: "aierview-면접피드백.pdf",
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { orientation: "portrait" },
+          pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+        })
+        .from(tempDiv)
+        .save()
+        .then(() => {
+          document.body.removeChild(tempDiv);
+        });
+    };
+  }
 });

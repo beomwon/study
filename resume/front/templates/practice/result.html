@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI reviewer</title>
+    <link rel="stylesheet" href="/front/static/css/practice/result.css" />
+  </head>
+  <body>
+    <canvas id="orb-canvas"></canvas>
+    <div class="practice-container">
+      <h1 class="practice-title">AIerview</h1>
+      <div class="result-container" id="result-content">
+        <h2>이력서 종합 피드백</h2>
+        <p id="resume-feedback"></p>
+        <h2>강점</h2>
+        <ul id="strengths-list"></ul>
+        <h2>약점</h2>
+        <ul id="weaknesses-list"></ul>
+        <h2>면접 질문 및 답변</h2>
+        <ol id="interview-list"></ol>
+      </div>
+      <div class="button-container">
+        <button type="button" class="glass-btn" id="back-btn">돌아가기</button>
+        <button type="button" class="glass-btn" id="save-pdf-btn">
+          저장하기
+        </button>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script type="module" src="/front/static/js/practice/result.js"></script>
+    <script type="module" src="/front/static/js/index.js"></script>
+  </body>
+</html>

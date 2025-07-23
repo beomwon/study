@@ -21,7 +21,7 @@ async def home(request: Request):
 
 @app.get("/current", response_class=HTMLResponse)
 async def current(request: Request):
-    return templates.TemplateResponse("practice/question.html", {"request": request})
+    return templates.TemplateResponse("practice/result.html", {"request": request})
 
 @app.get("/health")
 async def health_check():
