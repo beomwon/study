@@ -16,6 +16,39 @@ class FeedbackAnalysis(BaseModel):
     weaknesses: List[str]
     questions: Optional[List[InterviewQuestion]] = None
 
+class Feedbacks(BaseModel):
+    feedbacks: List[str]
+
+async def generate_feedback(questions, userAnswers):
+    prompt = """
+        당신은 지원자의 면접질문과 답변에 대한 피드백을 작성하는 전문가입니다.
+        주어진 질문과 답변을 바탕으로, 각 질문에 대한 피드백을 작성해주세요.
+
+        질문과 답변은 다음과 같습니다:
+        """
+    for i in range(len(questions)):
+        prompt += f"""{i + 1}번.
+            Question: {questions[i]}
+            Answer: {userAnswers[i]}
+        """
+    
+    prompt += """
+        피드백은 다음 JSON 형식으로 생성해 주세요:
+        {"feedbacks": list[str]}
+    """
+
+    client = genai.Client(api_key=settings.GOOGLE_APPLICATION_CREDENTIALS_JSON["ai_studio_api_key"])
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+        config={
+            "response_mime_type": "application/json",
+            "response_schema": Feedbacks
+        }
+    )
+    result = json.loads(response.text)
+    return result
+
 async def generate_interview_insights_with_answers(resume_pdf: UploadFile, company_pdf: UploadFile = File(None)):
     """
     Analyzes a resume and, optionally, a job posting to provide feedback,

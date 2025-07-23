@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.getItem("ua4"),
   ];
   const feedbacks = [
-    localStorage.getItem("feedback1"),
-    localStorage.getItem("feedback2"),
-    localStorage.getItem("feedback3"),
-    localStorage.getItem("feedback4"),
+    localStorage.getItem("f1"),
+    localStorage.getItem("f2"),
+    localStorage.getItem("f3"),
+    localStorage.getItem("f4"),
   ];
   const strengths = JSON.parse(localStorage.getItem("strengths") || "[]");
   const weaknesses = JSON.parse(localStorage.getItem("weaknesses") || "[]");

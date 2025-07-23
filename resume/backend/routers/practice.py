@@ -18,9 +18,20 @@ def practice_page(request: Request):
 def practice_page(request: Request):
     return templates.TemplateResponse("practice/question.html", {"request": request})
 
+@router.get("/result", response_class=HTMLResponse)
+def result_page(request: Request):
+    return templates.TemplateResponse("practice/result.html", {"request": request})
+
 @router.post("/send-file")
 async def make_question_and_analysis(
     resume_pdf: UploadFile = File(...),
     company_pdf: UploadFile = File(None)
 ):
     return await practice_service.make_question_and_analysis(resume_pdf, company_pdf)
+
+@router.post("/submit")
+async def make_feedback(request: Request):
+    body = await request.json()
+    questions = body.get("questions", [])
+    userAnswers = body.get("userAnswers", [])
+    return await practice_service.make_feedback(questions, userAnswers)
