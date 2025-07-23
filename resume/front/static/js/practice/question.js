@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
   const form = document.querySelector(".practice-form");
+  const loadingOverlay = document.getElementById("loading-overlay");
 
   function updateUI() {
     label.textContent = `Q${currentIdx + 1}. ${questions[currentIdx]}`;
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       textarea.focus();
     } else {
       //asnwers를 로컬 저장소 ua1~ua4에 저장
-      submitBtn.disabled = true;
+      nextBtn.disabled = true;
       loadingOverlay.style.display = "flex";
 
       localStorage.setItem("ua1", answers[0]);
@@ -59,46 +60,53 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("ua3", answers[2]);
       localStorage.setItem("ua4", answers[3]);
 
+      // 3초동안 로딩 오버레이 표시
+      setTimeout(() => {
+        loadingOverlay.style.display = "none";
+        nextBtn.disabled = false;
+        window.location.href = "/practice/result";
+      }, 3000);
+
       //로컬스토리지의 q1~q4, ua1~ua4를 서버에 전송하고, 응답을 기다린 후 /practice/result로 이동
-      fetch("/practice/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          questions: [
-            localStorage.getItem("q1"),
-            localStorage.getItem("q2"),
-            localStorage.getItem("q3"),
-            localStorage.getItem("q4"),
-          ],
-          userAnswers: [
-            localStorage.getItem("ua1"),
-            localStorage.getItem("ua2"),
-            localStorage.getItem("ua3"),
-            localStorage.getItem("ua4"),
-          ],
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          localStorage.setItem("f1", data.files.f1);
-          localStorage.setItem("f2", data.files.f2);
-          localStorage.setItem("f3", data.files.f3);
-          localStorage.setItem("f4", data.files.f4);
-          // 성공적으로 제출된 후 결과 페이지로 이동
-          loadingOverlay.style.display = "none";
-          submitBtn.disabled = false;
-          window.location.href = "/practice/result";
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      // fetch("/practice/submit", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     questions: [
+      //       localStorage.getItem("q1"),
+      //       localStorage.getItem("q2"),
+      //       localStorage.getItem("q3"),
+      //       localStorage.getItem("q4"),
+      //     ],
+      //     userAnswers: [
+      //       localStorage.getItem("ua1"),
+      //       localStorage.getItem("ua2"),
+      //       localStorage.getItem("ua3"),
+      //       localStorage.getItem("ua4"),
+      //     ],
+      //   }),
+      // })
+      //   .then((response) => {
+      //     if (!response.ok) {
+      //       throw new Error("Network response was not ok");
+      //     }
+      //     return response.json();
+      //   })
+      //   .then((data) => {
+      //     localStorage.setItem("f1", data.files.f1);
+      //     localStorage.setItem("f2", data.files.f2);
+      //     localStorage.setItem("f3", data.files.f3);
+      //     localStorage.setItem("f4", data.files.f4);
+      //     // 성공적으로 제출된 후 결과 페이지로 이동
+      //     loadingOverlay.style.display = "none";
+      //     submitBtn.disabled = false;
+      //     window.location.href = "/practice/result";
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
     }
   });
 
