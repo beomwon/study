@@ -19,10 +19,14 @@ app.include_router(practice.router, prefix="/practice")
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/current", response_class=HTMLResponse)
+async def current(request: Request):
+    return templates.TemplateResponse("practice/question.html", {"request": request})
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
 
 # 개발용 서버 실행 코드
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)

@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const resumeInput = document.getElementById("resume-pdf");
   const jobDropzone = document.getElementById("job-dropzone");
   const resumeDropzone = document.getElementById("resume-dropzone");
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const loadingOverlay = document.getElementById("loading-overlay");
 
   function setupDropzone(dropzone, input) {
     // 클릭 시 파일 선택
@@ -49,10 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     if (!resumeInput.files[0]) {
       alert("이력서 PDF를 첨부해 주세요.");
       return;
     }
+
+    submitBtn.disabled = true;
+    loadingOverlay.style.display = "flex";
+
     const formData = new FormData();
     if (jobInput.files[0]) {
       formData.append("job_pdf", jobInput.files[0]);
@@ -65,16 +72,29 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // gcs_urls 전체
-        const gcsUrls = data.gcs_urls;
-        // 파일별 url
-        const resumeUrl = data.files.resume;
-        const companyUrl = data.files.company;
+        if (!data.success) {
+          throw new Error(data.message || "파일 업로드 실패");
+        }
 
-        // 예시 출력
-        console.log("이력서 URL:", resumeUrl);
-        console.log("회사(구인공고) URL:", companyUrl);
-        console.log("전체 gcs_urls:", gcsUrls);
+        // Store variables in localStorage (from data.files)
+        localStorage.setItem("q1", data.files.q1);
+        localStorage.setItem("q2", data.files.q2);
+        localStorage.setItem("q3", data.files.q3);
+        localStorage.setItem("q4", data.files.q4);
+        localStorage.setItem("a1", data.files.a1);
+        localStorage.setItem("a2", data.files.a2);
+        localStorage.setItem("a3", data.files.a3);
+        localStorage.setItem("a4", data.files.a4);
+        localStorage.setItem("feedback", data.files.feedback);
+        localStorage.setItem("strengths", JSON.stringify(data.files.strengths));
+        localStorage.setItem(
+          "weaknesses",
+          JSON.stringify(data.files.weaknesses)
+        );
+
+        loadingOverlay.style.display = "none";
+        submitBtn.disabled = false;
+        window.location.href = `/practice/question`;
       })
       .catch((err) => {
         alert("업로드 실패: " + err.message);

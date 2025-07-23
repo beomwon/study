@@ -14,6 +14,10 @@ templates = Jinja2Templates(directory="front/templates")
 def practice_page(request: Request):
     return templates.TemplateResponse("practice/file-upload.html", {"request": request})
 
+@router.get("/question", response_class=HTMLResponse)
+def practice_page(request: Request):
+    return templates.TemplateResponse("practice/question.html", {"request": request})
+
 @router.post("/send-file")
 async def make_question_and_analysis(
     resume_pdf: UploadFile = File(...),

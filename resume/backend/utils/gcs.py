@@ -17,7 +17,6 @@ except Exception as e:
 
 def upload_to_gcs(resume_pdf: UploadFile, company_pdf: UploadFile = File(None)):
     result = {}
-    # 파일이름과 현재 시간을 이용하여 HASH 생성
     for file_obj, name in [(resume_pdf, "resume"), (company_pdf, "company")]:
         if not file_obj:
             continue
@@ -29,6 +28,5 @@ def upload_to_gcs(resume_pdf: UploadFile, company_pdf: UploadFile = File(None)):
         blob.upload_from_file(file_obj.file, content_type="application/pdf")
         gcs_uri = f"gs://{BUCKET_NAME}/{file_name}"
         result[name] = gcs_uri
-        print(f"File {file_name} uploaded to GCS at {gcs_uri}")
 
     return result

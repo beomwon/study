@@ -1,42 +1,35 @@
 from fastapi import UploadFile, File
 from fastapi.responses import JSONResponse
-from backend.utils.gcs import upload_to_gcs
+# from backend.utils.gcs import upload_to_gcs
+from backend.utils.gemini import generate_interview_insights_with_answers
 
 async def make_question_and_analysis(resume_pdf: UploadFile, company_pdf: UploadFile = File(None)):
-
-    gcs_urls = upload_to_gcs(resume_pdf, company_pdf)
+    # gcs_urls = upload_to_gcs(resume_pdf, company_pdf)
+    # print("make_question_and_analysis:", resume_pdf.filename, company_pdf.filename if company_pdf else "No company file")
+    result = await generate_interview_insights_with_answers(resume_pdf, company_pdf)
+    # print(type(result))
+    # print(result)
+    # print('feedback:', result.get("feedback"), '\n')
+    # print('strengths:', result.get("strengths"), '\n')
+    # print('weaknesses:', result.get("weaknesses"), '\n')
+    # print('questions:', result['questions'], '\n')
+    # print('첫번째 질문 :', result['questions'][0]['question'])
+    # print('첫번째 질문의 예시 답변 :', result['questions'][0]['example_answer'])
+    # print(result.get("questions", [])[0]['question'])
 
     return JSONResponse({
         "success": True,
         "files": {
-            "resume": gcs_urls.get("resume"),
-            "company": gcs_urls.get("company")
-        },
-        "gcs_urls": gcs_urls
+            "feedback": result.get("feedback"),
+            "strengths": result.get("strengths"),
+            "weaknesses": result.get("weaknesses"),
+            "q1": result['questions'][0]['question'],
+            "a1": result['questions'][0]['example_answer'],
+            "q2": result['questions'][1]['question'],
+            "a2": result['questions'][1]['example_answer'],
+            "q3": result['questions'][2]['question'],
+            "a3": result['questions'][2]['example_answer'],
+            "q4": result['questions'][3]['question'],
+            "a4": result['questions'][3]['example_answer']
+        }
     })
-
-    # # Gemini API 호출
-    # import requests
-    # gemini_api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=YOUR_GEMINI_API_KEY"  # 실제 키로 수정 필요
-    # prompt = ""
-    # if gcs_urls.get("job"):
-    #     prompt += f"구인공고 PDF: {gcs_urls['job']}\n"
-    #     prompt += "구인공고에 맞는 면접관이 되어 질문 5가지와 답변, 이력서 평가를 해주세요.\n"
-    # else:
-    #     prompt += "이력서 PDF만 있습니다. 이력서를 분석하고 면접관이 되어 질문 5가지와 답변, 평가를 해주세요.\n"
-    # prompt += f"이력서 PDF: {gcs_urls.get('resume','')}\n"
-
-    # gemini_payload = {
-    #     "contents": [
-    #         {"parts": [{"text": prompt}]}
-    #     ]
-    # }
-    # gemini_resp = requests.post(gemini_api_url, json=gemini_payload)
-    # gemini_data = gemini_resp.json() if gemini_resp.ok else {"error": "Gemini API 호출 실패"}
-
-    # return JSONResponse({
-    #     "success": True,
-    #     "files": files,
-    #     "gcs_urls": gcs_urls,
-    #     "gemini": gemini_data
-    # })

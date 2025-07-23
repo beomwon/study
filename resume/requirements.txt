@@ -5,3 +5,4 @@ fastapi-jwt-auth
 jinja2
 python-multipart
 google-cloud-storage
+google-genai

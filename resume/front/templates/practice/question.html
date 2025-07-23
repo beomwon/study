@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI reviewer</title>
+    <link rel="stylesheet" href="/front/static/css/practice/question.css" />
+  </head>
+  <body>
+    <canvas id="orb-canvas"></canvas>
+    <div class="practice-container">
+      <h1 class="practice-title">AIerview</h1>
+      <form class="practice-form">
+        <div class="question-group" id="question-group">
+          <label class="question-label" id="question-label">질문 1</label>
+          <textarea class="answer-input" id="answer-input" rows="3"></textarea>
+        </div>
+        <div class="button-group">
+          <button
+            type="button"
+            class="glass-btn nav-btn"
+            id="prev-btn"
+            disabled
+          >
+            이전
+          </button>
+          <button type="button" class="glass-btn nav-btn" id="next-btn">
+            다음
+          </button>
+        </div>
+      </form>
+    </div>
+    <script type="module" src="/front/static/js/practice/question.js"></script>
+    <script type="module" src="/front/static/js/index.js"></script>
+  </body>
+</html>
