@@ -22,3 +22,13 @@ def create_user(email: str, hashed_pw: str, nickname: str, created_at: date):
     if resp.data and len(resp.data) > 0:
         return resp.data[0]
     return None
+
+def update_user_nickname(email: str, nickname: str):
+    user = get_user_by_email(email)
+    if not user:
+        return None
+    
+    resp = supabase.table("users").update({"nickname": nickname}).eq("email", email).execute()
+    if resp.data and len(resp.data) > 0:
+        return resp.data[0]
+    return None

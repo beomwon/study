@@ -1,15 +1,13 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from passlib.context import CryptContext
-from app.services.supabase import get_user_by_email, create_user
+from app.services.supabase import get_user_by_email, create_user, update_user_nickname
 from app.core.jwt import create_access_token
-from config.settings import settings
-from app.api.services import auth as auth_service
 from datetime import datetime
+from app.utils.auth_code import send_auth_code as send_auth_code_util
 
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 class SignUpRequest(BaseModel):
     email: str
@@ -20,18 +18,36 @@ class LoginRequest(BaseModel):
     email: str
     password: str
 
+def send_auth_code(recipient: str):
+    if get_user_by_email(recipient):
+        return {"success": False, "message": "이미 사용 중인 이메일이에요."}
+    
+    try:
+        code = send_auth_code_util(recipient)
+    except Exception as e:
+        return {"success": False, "message": "인증번호 전송에 실패했어요."}
+    
+    return {"success": True, "code": code}
+
 def sign_up(data: SignUpRequest):
-    # 이메일 중복 체크
-    if get_user_by_email(data.email):
-        raise HTTPException(status_code=400, detail="이미 사용 중인 이메일입니다.")
-    # 비밀번호 해싱
     hashed_pw = pwd_context.hash(data.password)
-    # Supabase에 유저 저장
+
     created_at = datetime.utcnow().isoformat()
-    user = create_user(data.email, hashed_pw, data.nickname, created_at)
+    user = create_user(data.email, hashed_pw, "책갈피 유저", created_at)
     if not user:
-        raise HTTPException(status_code=500, detail="회원가입에 실패했습니다.")
-    return {"msg": "회원가입 성공", "email": user["email"], "nickname": user["nickname"]}
+        return {"success": False, "message": "회원가입에 실패했어요."}
+    return {"success": True, "email": data.email}
+
+def update_user_nickname(email: str, nickname: str):
+    user = get_user_by_email(email)
+    if not user:
+        raise HTTPException(status_code=404, detail="사용자를 찾을 수 없습니다.")
+    
+    user = update_user_nickname(email, nickname)
+    if not user:
+        return {"success": False, "message": "닉네임 업데이트에 실패했어요."}
+
+    return {"success": True}
 
 def login(data: LoginRequest):
     user = get_user_by_email(data.email)
