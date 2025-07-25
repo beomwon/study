@@ -1,8 +1,11 @@
 from supabase import create_client
 from config.settings import settings
 from datetime import date
+import os
 
-supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_ROLE_KEY)
+
+supabase = create_client(settings.SUPABASE_URL, os.environ.get("SUPABASE_SERVICE_KEY"))
+# supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_ROLE_KEY)
 
 def get_user_by_email(email):
     try:
