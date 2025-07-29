@@ -21,6 +21,10 @@ class AuthCodeRequest(BaseModel):
 async def send_auth_code(data: AuthCodeRequest):
     return auth_service.send_auth_code(data.email)
 
+@router.post("/sign-up/update_user_nickname")
+async def update_user_nickname(data):
+    return auth_service.update_user_nickname(data.email, data.nickname)
+
 @router.post("/sign-up")
 async def sign_up(data: SignUpRequest):
     return auth_service.sign_up(data.email, data.password)
