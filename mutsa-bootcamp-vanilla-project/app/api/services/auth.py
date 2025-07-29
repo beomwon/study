@@ -29,14 +29,14 @@ def send_auth_code(recipient: str):
     
     return {"success": True, "code": code}
 
-def sign_up(data: SignUpRequest):
-    hashed_pw = pwd_context.hash(data.password)
+def sign_up(email: str, password: str):
+    hashed_pw = pwd_context.hash(password)
 
     created_at = datetime.utcnow().isoformat()
-    user = create_user(data.email, hashed_pw, "책갈피 유저", created_at)
+    user = create_user(email, hashed_pw, "책갈피 유저", created_at)
     if not user:
         return {"success": False, "message": "회원가입에 실패했어요."}
-    return {"success": True, "email": data.email}
+    return {"success": True, "email": email}
 
 def update_user_nickname(email: str, nickname: str):
     user = get_user_by_email(email)
