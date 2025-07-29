@@ -52,7 +52,7 @@ class AuthAndIPMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         # 인증 없이 통과시킬 경로 (startswith로 체크)
-        open_paths = ["/login", "/sign-up", "/health"]
+        open_paths = ["/login", "/sign-up", "/health", "/update_user_nickname"]
         if any(request.url.path.startswith(path) for path in open_paths) or \
            request.url.path.startswith("/docs") or request.url.path.startswith("/openapi"):
             return await call_next(request)
