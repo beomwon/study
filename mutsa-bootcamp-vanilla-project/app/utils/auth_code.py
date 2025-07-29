@@ -1,15 +1,13 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-# import config.settings as settings
+import config.settings as settings
 
 def send_auth_code(recipient: str):
     import random, string
     # 로그인 정보
-    # gmail_user = settings.GOOGLE_ID
-    # gmail_password = settings.GOOGLE_PASSWORD
-    gmail_user = "espero.msj@gmail.com"
-    gmail_password = "jsia cejz zaqt zaqe"
+    gmail_user = settings.GOOGLE_ID
+    gmail_password = settings.GOOGLE_PASSWORD
 
     # 인증번호 생성 (대문자+숫자 6자리)
     code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
