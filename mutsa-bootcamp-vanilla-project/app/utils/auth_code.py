@@ -1,7 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import config.settings as settings
+from config.settings import settings
 
 def send_auth_code(recipient: str):
     import random, string
