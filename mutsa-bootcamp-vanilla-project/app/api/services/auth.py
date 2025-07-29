@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from passlib.context import CryptContext
-from app.services.supabase import get_user_by_email, create_user, update_user_nickname
+from app.services.supabase import get_user_by_email, create_user, supabase_update_user_nickname
 from app.core.jwt import create_access_token
 from datetime import datetime
 from app.utils.auth_code import send_auth_code as send_auth_code_util
@@ -43,7 +43,7 @@ def update_user_nickname(email: str, nickname: str):
     if not user:
         raise HTTPException(status_code=404, detail="사용자를 찾을 수 없습니다.")
     
-    user = update_user_nickname(email, nickname)
+    user = supabase_update_user_nickname(email, nickname)
     if not user:
         return {"success": False, "message": "닉네임 업데이트에 실패했어요."}
 

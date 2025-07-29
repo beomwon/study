@@ -29,7 +29,7 @@ def create_user(email: str, hashed_pw: str, nickname: str, created_at: date):
         return resp.data[0]
     return None
 
-def update_user_nickname(email: str, nickname: str):
+def supabase_update_user_nickname(email: str, nickname: str):
     user = get_user_by_email(email)
     if not user:
         return None

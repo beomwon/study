@@ -23,7 +23,7 @@ class UpdateNicknameRequest(BaseModel):
 
 @router.post("/update_user_nickname")
 async def update_user_nickname(data: UpdateNicknameRequest):
-    print(f"Updating nickname for user: {data.email} to {data.nickname}")
+    # print(f"Updating nickname for user: {data.email} to {data.nickname}")
     return auth_service.update_user_nickname(data.email, data.nickname)
 
 @router.post("/sign-up/auth")
