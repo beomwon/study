@@ -42,6 +42,9 @@ class AuthAndIPMiddleware(BaseHTTPMiddleware):
         if not is_allowed_ip(client_ip):
             return JSONResponse(status_code=403, content={"detail": "허용되지 않은 IP입니다."})
 
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         # 인증 없이 통과시킬 경로 (startswith로 체크)
         open_paths = ["/login", "/sign-up", "/health"]
         if any(request.url.path.startswith(path) for path in open_paths) or \
