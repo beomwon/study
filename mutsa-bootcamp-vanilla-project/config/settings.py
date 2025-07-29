@@ -15,5 +15,6 @@ class Settings:
     GOOGLE_ID: str = os.getenv("GOOGLE_ID")
     GOOGLE_PASSWORD: str = os.getenv("GOOGLE_PASSWORD")
     SUPABASE_SERVICE_ROLE_KEY: str = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    ALADIN_API_KEY: str = os.getenv("ALADIN_API_KEY", "default_aladin_api_key")
 
 settings = Settings()
