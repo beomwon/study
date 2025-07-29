@@ -25,7 +25,7 @@ def send_auth_code(recipient: str):
     try:
         code = send_auth_code_util(recipient)
     except Exception as e:
-        return {"success": False, "message": "인증번호 전송에 실패했어요."}
+        return {"success": False, "message": "인증번호 전송에 실패했어요.", "error": str(e)}
     
     return {"success": True, "code": code}
 
