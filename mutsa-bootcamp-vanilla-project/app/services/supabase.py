@@ -92,12 +92,17 @@ def get_user_review(user_id: str, isbn13: str):
 
 def get_public_reading_logs():
     try:
-        # users 테이블의 nickname도 조인해서 가져오기
+        # 테스트용으로 reading_logs 테이블에서 전체 데이터 가지고 오기
         resp = supabase.table("reading_logs") \
-            .select("*, users:nickname") \
-            .eq("public", True) \
-            .order("created_at", desc=True) \
+            .select("*") \
             .execute()
+
+        # users 테이블의 nickname도 조인해서 가져오기
+        # resp = supabase.table("reading_logs") \
+        #     .select("*, users:nickname") \
+        #     .eq("public", True) \
+        #     .order("created_at", desc=True) \
+        #     .execute()
         return resp.data
     except Exception as e:
         logger.error(f"Error fetching reading logs: {e}")
