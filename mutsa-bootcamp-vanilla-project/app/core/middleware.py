@@ -42,8 +42,8 @@ def verify_and_refresh_token(token: str):
 class AuthAndIPMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         client_ip = request.client.host
-        logger.info(f"Client IP: {client_ip}")
-        logger.info(f"Request path: {request.url.path}")
+        # logger.info(f"Client IP: {client_ip}")
+        # logger.info(f"Request path: {request.url.path}")
         
         if not is_allowed_ip(client_ip):
             return JSONResponse(status_code=403, content={"detail": "허용되지 않은 IP입니다."})
@@ -52,7 +52,7 @@ class AuthAndIPMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         # 인증 없이 통과시킬 경로 (startswith로 체크)
-        open_paths = ["/login", "/sign-up", "/health", "/update_user_nickname"]
+        open_paths = ["/login", "/sign-up", "/health", "/update_user_nickname", "/community"]
         if any(request.url.path.startswith(path) for path in open_paths) or \
            request.url.path.startswith("/docs") or request.url.path.startswith("/openapi"):
             return await call_next(request)
@@ -70,7 +70,7 @@ class AuthAndIPMiddleware(BaseHTTPMiddleware):
         if error == "이메일 없음":
             raise HTTPException(status_code=401, detail="토큰에 이메일 정보가 없습니다.")
 
-        request.state.user_email = payload.get("email")
+        request.state.user_id = payload.get("sub")
         response = await call_next(request)
         if refresh_token:
             response.headers["X-Refresh-Token"] = refresh_token

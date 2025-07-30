@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routers.auth import router as auth_router
+from app.api.routers.community import router as community_router
+from app.api.routers.dashboard import router as dashboard_router
+from app.api.routers.review import router as review_router
 from app.core.middleware import AuthAndIPMiddleware
 
 app = FastAPI()
@@ -16,6 +19,9 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(dashboard_router)
+app.include_router(review_router)
+app.include_router(community_router)
 
 @app.get("/health")
 async def health_check():

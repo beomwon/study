@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import HTTPException
 from pydantic import BaseModel
 from passlib.context import CryptContext
 from app.services.supabase import get_user_by_email, create_user, supabase_update_user_nickname
@@ -6,7 +6,6 @@ from app.core.jwt import create_access_token
 from datetime import datetime
 from app.utils.auth_code import send_auth_code as send_auth_code_util
 
-router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class SignUpRequest(BaseModel):
