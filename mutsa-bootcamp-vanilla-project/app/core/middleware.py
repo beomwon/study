@@ -42,8 +42,10 @@ def verify_and_refresh_token(token: str):
 class AuthAndIPMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         client_ip = request.client.host
-        # logger.info(f"Client IP: {client_ip}")
-        # logger.info(f"Request path: {request.url.path}")
+
+
+        # 테스트용
+        return await call_next(request)
         
         if not is_allowed_ip(client_ip):
             return JSONResponse(status_code=403, content={"detail": "허용되지 않은 IP입니다."})
