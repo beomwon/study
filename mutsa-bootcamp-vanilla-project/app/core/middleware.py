@@ -45,7 +45,7 @@ class AuthAndIPMiddleware(BaseHTTPMiddleware):
 
 
         # 테스트용
-        return await call_next(request)
+        # return await call_next(request)
         
         if not is_allowed_ip(client_ip):
             return JSONResponse(status_code=403, content={"detail": "허용되지 않은 IP입니다."})
