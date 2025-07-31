@@ -58,4 +58,4 @@ def login(data: LoginRequest):
     # JWT 토큰 발급
     token_data = {"sub": str(user["id"]), "email": user["email"]}
     access_token = create_access_token(token_data)
-    return {"access_token": access_token, "token_type": "bearer", "nickname": user["nickname"]}
+    return {"token": access_token, "token_type": "bearer", "nickname": user["nickname"]}
